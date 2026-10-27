@@ -8,4 +8,4 @@ Use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/): `<ty
 - **Scope**: the skill's folder name (`pr-review`). Leave it out for changes across the repo.
 - **Subject**: imperative mood, no trailing period, the whole line about 60 characters.
 
-A pull request title follows the same format, since it becomes the commit message when the PR is squash-merged.
+Pull requests are squash-merged, so the PR title becomes the commit on `main` and follows the same format. Commits inside a PR can be working history.

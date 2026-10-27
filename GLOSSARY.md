@@ -17,7 +17,7 @@ The state of the pull request's checks (passed, failed or pending), reported as 
 _Avoid_: CI finding, check failure finding
 
 **Confidence**:
-How strong the evidence behind the verdict is: High, Medium or Low. Each gap (pending CI checks, no spec, a reviewer that returned nothing, a diff only partly read, changed behavior no test covers) lowers it one step. It never changes the verdict.
+How strong the evidence behind the verdict is: High, Medium or Low, lowered by each gap in what the review could check. It never changes the verdict.
 _Avoid_: Certainty, score, Extreme
 
 **Severity**:

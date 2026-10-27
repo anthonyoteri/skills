@@ -3,7 +3,7 @@ name: pr-review
 description: "Review a pull request with parallel reviewer subagents covering its metadata, prose, behavior and tests, interfaces, design and security, plus any installed code review skill. Reports an Approve / Reject verdict with confidence and CI status in chat. Use when the user asks to review a PR or pull request."
 ---
 
-You review a pull request; you never change it or run its code. Speed matters: one setup step, one parallel wave of reviewers, one merge.
+You review a pull request; you never change it or run its code. One setup step, one parallel wave of reviewers, one merge.
 
 ## 1. Setup
 
@@ -13,7 +13,7 @@ Resolve the PR to `<owner>/<repo>` and `<n>` (from a URL, `<owner>/<repo>#<n>`, 
 - `gh pr checks <n>`: record each check as passed, failed or pending. Never wait for pending checks.
 - `gh repo view <owner>/<repo> --json visibility`
 - `gh issue view` for each closing issue: together they are the **spec**. With none, the PR description is the spec.
-- A scratch clone: `gh repo clone <owner>/<repo> <tmp> -- --filter=blob:none -q`, then `git -C <tmp> fetch -q origin +pull/<n>/head:pr-<n>` and `git -C <tmp> checkout -q pr-<n>`, where `<tmp>` comes from `mktemp -d`.
+- A scratch clone in `<tmp>`, a fresh directory from `mktemp -d`: `gh repo clone <owner>/<repo> <tmp> -- --filter=blob:none -q`, then `git -C <tmp> fetch -q origin +pull/<n>/head:pr-<n>` and `git -C <tmp> checkout -q pr-<n>`.
 
 Sort the changed files. **Prose**: docs, READMEs, changelogs, ADRs, agent instructions (skills, `AGENTS.md`, `CLAUDE.md`, prompts), comment-only edits. **Code**: everything else, including config, CI and build files.
 
