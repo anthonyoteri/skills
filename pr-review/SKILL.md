@@ -44,7 +44,8 @@ While they run, run the code review skill yourself from inside `<tmp>`, giving i
 
 When every reviewer has returned, merge duplicate findings, keep the higher severity, and number them `F1`, `F2`, … in report order. Delete `<tmp>`.
 
-- **Verdict**: Reject if any finding is Blocking or Should fix, otherwise Approve.
+- **Verdict**: Reject if any finding is Blocking, naming in the header the findings whose fixes would turn it to Approve; otherwise Approve. Should fix and Nits never hold up approval.
+- **Rulings**: drop any finding the user rejected or deferred in an earlier round of this conversation, unless what it's about has changed since, and give the count in the header.
 - **Split**: when a reviewer names a file it couldn't read in full, raise `metadata`'s proposed split, or propose one yourself, as Should fix.
 - **Confidence**: start at High and drop one step, to a floor of Low, for each gap: pending CI checks; no spec beyond a thin description; a reviewer that failed or returned nothing; any reviewer naming a file it couldn't read in full (once); a coverage gap reported by `behavior`. Confidence never changes the verdict.
 - **CI**: report each failed and pending check. CI is never a finding and never changes the verdict; gating merges is the repo's job.
@@ -52,16 +53,15 @@ When every reviewer has returned, merge duplicate findings, keep the higher seve
 Reply in chat:
 
 ```
-**Reject** · confidence Medium (2 checks pending) · 1 Blocking, 2 Should fix, 3 Nits
+**Reject** · confidence Medium (2 checks pending) · approves once F1 is fixed · 1 Blocking, 2 Should fix, 3 Nits · 2 omitted per earlier rulings
 CI: 🔴 lint failed · 🟡 2 pending · 🟢 5 passed
 
 ### Blocking
 F1 `src/x.py:42` (behavior): <problem>. Fix: <one line>.
 ### Should fix
 ### Nits
-### Code review (<skill name>, as reported)
 ### Automate this
 - <lint rule or CI step>: would have caught F3, F5
 ```
 
-Omit empty sections. Keep the code review skill's output as it reported it, but give each of its findings a severity, which counts toward the verdict.
+Omit empty sections. Merge the code review skill's findings with the reviewers', giving each a severity. Report each finding once: list under Automate this only automation that isn't already a finding's fix.

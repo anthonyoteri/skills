@@ -42,13 +42,13 @@ Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/revie
 
 When every reviewer has returned, merge duplicate findings, keep the higher severity, and number them `F1`, `F2`, … in report order. Delete `<tmp>`.
 
-- **Verdict**: Reject if any finding is Blocking or Should fix, otherwise Approve.
+- **Verdict**: Reject if any finding is Blocking, naming in the header the findings whose fixes would turn it to Approve; otherwise Approve. Should fix and Nits never hold up approval.
 - **Confidence**: start at High and drop one step, to a floor of Low, for each gap: a reference or related repo out of reach; a reviewer that failed or returned nothing; a spec too large to read in full; no test suite timing from `tests`. Confidence never changes the verdict.
 
 Reply in chat:
 
 ```
-**Reject** · confidence Medium (1 reference unreachable) · 2 Blocking, 1 Should fix, 2 Nits
+**Reject** · confidence Medium (1 reference unreachable) · approves once F1 and F2 are fixed · 2 Blocking, 1 Should fix, 2 Nits
 
 ### Blocking
 F1 #42 (assumptions): <problem>. Fix: <one line>.
@@ -58,4 +58,4 @@ F1 #42 (assumptions): <problem>. Fix: <one line>.
 - <static check, lint rule or CI step>: guards F3, F5
 ```
 
-Omit empty sections. Cite each finding by ticket (`#42`) or by spec section (`spec § Rollout`).
+Omit empty sections. Report each finding once: list under Land early only guards that aren't already a finding's fix. Cite each finding by ticket (`#42`) or by spec section (`spec § Rollout`).

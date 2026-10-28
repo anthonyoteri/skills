@@ -28,7 +28,7 @@ Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/revie
 
 When every reviewer has returned, merge duplicate findings, keep the higher severity, and number them `F1`, `F2`, … in report order.
 
-- **Pre-merge verdict**: Reject if any finding is Blocking or Should fix, otherwise Approve.
+- **Pre-merge verdict**: Reject if any finding is Blocking, naming in the header the findings whose fixes would turn it to Approve; otherwise Approve. Should fix and Nits never hold up approval.
 - **Merged verdict**: **Keep**, **Supersede** with the replacement ADR text `warrant` proposed, or **Reject** with no replacement. Reject only on significant just cause: evidence that the decision is now wrong and that no decision should take its place. Report any pending edit that changes intent as Blocking, alongside the verdict.
 - **Confidence**: start at High and drop one step, to a floor of Low, for each gap: a reviewer that failed or returned nothing; a claim or rule no reviewer could check. Confidence never changes the verdict.
 
