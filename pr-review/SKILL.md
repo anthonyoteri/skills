@@ -1,6 +1,6 @@
 ---
 name: pr-review
-description: "Review a pull request with parallel reviewer subagents covering its metadata, prose, behavior and tests, interfaces, design and security, plus any installed code review skill. Reports an Approve / Reject verdict with confidence and CI status in chat. Use when the user asks to review a PR or pull request."
+description: "Review a pull request with parallel reviewer subagents covering its metadata, its fit with the surrounding code, prose, behavior and tests, interfaces, design and security, plus any installed code review skill. Reports an Approve / Reject verdict with confidence and CI status in chat. Use when the user asks to review a PR or pull request."
 ---
 
 You review a pull request; you never change it or run its code. One setup step, one parallel wave of reviewers, one merge.
@@ -26,6 +26,7 @@ In one message, launch every reviewer that applies as a background `general-purp
 | Reviewer | Launch when | Model |
 |---|---|---|
 | `metadata` | always | sonnet |
+| `context` | always | inherit |
 | `prose` | prose changed | sonnet |
 | `behavior`, `interfaces`, `design`, `security` | code changed | inherit |
 
