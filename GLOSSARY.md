@@ -8,45 +8,25 @@ The language of the review skills: how work is judged and how the judgment is re
 One problem a reviewer found, with its location, evidence and a suggested fix.
 _Avoid_: Issue, comment, note
 
-**Verdict**:
-The outcome of a review.
-_Avoid_: Recommendation, decision, request changes
-
-**CI status**:
-The state of the pull request's checks (passed, failed or pending), reported as red flags beside the verdict. It is never a finding and never changes the verdict; gating merges is the repository's job.
-_Avoid_: CI finding, check failure finding
-
 **Confidence**:
-How strong the evidence behind the verdict is: High, Medium or Low, lowered by each gap in what the review could check. It never changes the verdict.
+How strong the evidence behind a review's outcome is: High, Medium or Low, lowered by each gap in what the review could check.
 _Avoid_: Certainty, score, Extreme
-
-**Severity**:
-How much a finding matters: Blocking, Should fix or Nit.
-_Avoid_: Priority, level, Critical/High/Medium/Low
 
 **Reviewer**:
 A subagent that examines one area and reports findings, starting from a fresh context.
 _Avoid_: Angle, agent, checker
 
 **Code review skill**:
-An installed skill that reviews a diff, run alongside the reviewers; its findings count toward the verdict.
+An installed skill that reviews a diff, run alongside the reviewers; its findings count like a reviewer's.
 _Avoid_: Code reviewer, review plugin
 
 **Spec**:
-What a change is meant to do. For a pull request, the issues it closes, or its description when it closes none. For a spec review, the spec issue together with its tickets.
+What a change is meant to do.
 _Avoid_: Requirements, specification, plan
 
 **Ticket**:
 One issue the spec is split into, implemented and reviewed as one pull request.
 _Avoid_: Task, sub-task, story
-
-**Reference**:
-Anything the spec cites that it doesn't define itself, especially the issue or report describing the problem it solves.
-_Avoid_: Link, source
-
-**Assumption**:
-Something the spec takes as true without stating the evidence. Resolved when facts confirm or contradict it; one the facts can't settle is a gap in the spec.
-_Avoid_: Premise, guess
 
 **Deletion test**:
 Removing a use case from the spec and asking whether the outcome measurably changes. A use case that fails it adds nothing.
@@ -83,7 +63,3 @@ _Avoid_: Meaning, spirit
 **Supersede**:
 Replace a merged ADR's decision with a new ADR, leaving the old one in place with its status updated.
 _Avoid_: Amend, override
-
-**Grandfathered**:
-Code that existed before an ADR merged, which that ADR doesn't bind. Code landing with the ADR, in the same pull request or commit, is bound.
-_Avoid_: Legacy, exempt
