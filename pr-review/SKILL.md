@@ -15,6 +15,8 @@ Resolve the PR to `<owner>/<repo>` and `<n>` (from a URL, `<owner>/<repo>#<n>`, 
 - `gh issue view` for each closing issue: together they are the **spec**. With none, the PR description is the spec.
 - A scratch clone in `<tmp>`, a fresh directory from `mktemp -d`: `gh repo clone <owner>/<repo> <tmp> -- --filter=blob:none -q`, then `git -C <tmp> fetch -q origin +pull/<n>/head:pr-<n>` and `git -C <tmp> checkout -q pr-<n>`.
 
+**Rounds**: when an earlier round in this conversation reviewed this PR, or the user gives `since <sha>`, this round is **incremental** from that round's head `<since>`, unless the user asks for `full`. Fetch it (`git -C <tmp> fetch -q origin <since>`); if that fails or `<since>` isn't an ancestor of `HEAD`, as after a force push, review the whole PR. In an incremental round, the changed files and size below come from `<since>..HEAD`, keeping only files the PR itself changes (`origin/<baseRefName>...HEAD`), so a merge from the base branch doesn't count.
+
 Sort the changed files. **Prose**: docs, READMEs, changelogs, ADRs, agent instructions (skills, `AGENTS.md`, `CLAUDE.md`, prompts), comment-only edits. **Code**: everything else, including config, CI and build files.
 
 The code's **size** is its added lines, summed over the code files in `git -C <tmp> diff --numstat origin/<baseRefName>...HEAD`, leaving out lockfiles and **generated** files, the ones the base branch's `.gitattributes` marks `linguist-generated`.
@@ -36,9 +38,9 @@ Generated files aren't reviewed, and lockfiles go to one `interfaces` reviewer.
 
 If the size is more than one reviewer can read with care (about 1,500 lines of Python; more for verbose code, less for dense), split the code files by directory into **batches** within that limit, and launch each code reviewer once per batch. `context` still runs once, over the whole PR.
 
-Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/reviewers/<name>.md`, then review PR `<url>`. Clone: `<tmp>`, PR checked out, base `origin/<baseRefName>`. Your files: `<list>`. Spec: `<issue text, or 'the PR description'>`. Repo visibility: `<visibility>`." Tell `design` whether a code review skill is running, and `metadata` and `context` whether the code was batched.
+Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/reviewers/<name>.md`, then review PR `<url>`. Clone: `<tmp>`, PR checked out, base `origin/<baseRefName>`. Your files: `<list>`. Spec: `<issue text, or 'the PR description'>`. Repo visibility: `<visibility>`." In an incremental round, add "Since: `<since>`" to every prompt but `metadata`'s, and give each reviewer the earlier rounds' findings in its area that the user didn't reject or defer. Tell `design` whether a code review skill is running, and `metadata` and `context` whether the code was batched.
 
-While they run, run the code review skill yourself from inside `<tmp>`, giving it `origin/<baseRefName>` as the fixed point and the spec, so it never stops to ask.
+While they run, run the code review skill yourself from inside `<tmp>`, giving it `<since>` in an incremental round, otherwise `origin/<baseRefName>`, as the fixed point and the spec, so it never stops to ask.
 
 ## 3. Verdict
 
@@ -54,6 +56,7 @@ Reply in chat:
 
 ```
 **Reject** · confidence Medium (2 checks pending) · approves once F1 is fixed · 1 Blocking, 2 Should fix, 3 Nits · 2 omitted per earlier rulings
+Reviewed: `a1b2c3d` (incremental since `9f8e7d6`)
 CI: 🔴 lint failed · 🟡 2 pending · 🟢 5 passed
 
 ### Blocking
