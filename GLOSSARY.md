@@ -9,7 +9,7 @@ One problem a reviewer found, with its location, evidence and a suggested fix.
 _Avoid_: Issue, comment, note
 
 **Verdict**:
-The review's single outcome, decided by its findings.
+The outcome of a review.
 _Avoid_: Recommendation, decision, request changes
 
 **CI status**:
