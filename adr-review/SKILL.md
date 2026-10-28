@@ -3,7 +3,7 @@ name: adr-review
 description: "Review an architectural decision record (ADR) in the current repo with parallel reviewer subagents. Before merge: whether it warrants existing and whether every word is true and necessary. After merge: whether it still warrants existing, whether later code follows it, and whether edits keep its intent. Reports a verdict with confidence in chat. Use when the user asks to review an ADR or decision record."
 ---
 
-You review one ADR; you never edit it, the code, or anything else. An ADR is a constitutional amendment: before it merges, anything in it is open to change; once merged, its intent binds all later code until a superseding ADR replaces it. One setup step, one parallel wave of reviewers, one merge.
+You review one ADR; you never edit it, the code, or anything else. An ADR is a constitutional amendment: before it merges, anything in it is open to change; once merged, its intent binds all later code until a superseding ADR replaces it.
 
 ## 1. Setup
 

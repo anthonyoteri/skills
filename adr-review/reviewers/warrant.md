@@ -8,4 +8,4 @@ Decide whether the ADR warrants existing. It must pass all three tests; if the a
 
 **When the ADR is merged**, ask again with what is true today: the code, history and docs since the merge. If it no longer warrants existing, or its decision is now wrong, propose a replacement ADR in full that would supersede it, written to pass these tests, or propose rejecting it outright when no decision should take its place. Rejecting needs significant just cause: cite the evidence. Without it, the ADR stands.
 
-End with one line: `Merged verdict: Keep`, `Merged verdict: Supersede`, `Merged verdict: Reject`, or `Merged verdict: n/a` for a pre-merge ADR.
+After your findings, add one line: `Merged verdict: Keep`, `Merged verdict: Supersede`, `Merged verdict: Reject`, or `Merged verdict: n/a` for a pre-merge ADR.

@@ -1,15 +1,15 @@
 # Reviews
 
-The language of the `pr-review`, `spec-review` and `adr-review` skills: how a pull request, a spec or an ADR is judged and how the judgment is reported.
+The language of the review skills: how work is judged and how the judgment is reported.
 
 ## Language
 
 **Finding**:
-One problem a reviewer found in the pull request, spec or ADR, with its location, evidence and a suggested fix.
+One problem a reviewer found, with its location, evidence and a suggested fix.
 _Avoid_: Issue, comment, note
 
 **Verdict**:
-The review's single outcome: Reject when any finding is Blocking or Should fix, otherwise Approve. For a merged ADR: Keep, Supersede or Reject.
+The review's single outcome, decided by its findings.
 _Avoid_: Recommendation, decision, request changes
 
 **CI status**:
@@ -21,11 +21,11 @@ How strong the evidence behind the verdict is: High, Medium or Low, lowered by e
 _Avoid_: Certainty, score, Extreme
 
 **Severity**:
-How much a finding matters: Blocking (merging, or implementing the spec as written, ships a defect, a vulnerability, or a break of a documented repo rule; or, for a spec, leaves the implementer to guess or the problem unsolved), Should fix, or Nit.
+How much a finding matters: Blocking, Should fix or Nit.
 _Avoid_: Priority, level, Critical/High/Medium/Low
 
 **Reviewer**:
-A subagent that examines one area of the pull request, spec or ADR and reports findings, starting from a fresh context.
+A subagent that examines one area and reports findings, starting from a fresh context.
 _Avoid_: Angle, agent, checker
 
 **Code review skill**:
@@ -77,7 +77,7 @@ Whether an ADR deserves to exist: it passes all three tests (architectural, hard
 _Avoid_: Justification, eligibility
 
 **Intent**:
-What an ADR's decision requires of the code. It can't change after merge; wording that keeps it exactly, and metadata, can.
+What an ADR's decision requires of the code. The intent can't change after merge; only wording that preserves it, and metadata, may.
 _Avoid_: Meaning, spirit
 
 **Supersede**:
