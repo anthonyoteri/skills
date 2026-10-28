@@ -13,7 +13,7 @@ Find the default branch `origin/<default>` with `git fetch -q origin && git symb
 
 ## 2. Review wave
 
-In one message, launch every reviewer that applies as a background `general-purpose` subagent. Never fork: each starts with a fresh context, and its prompt carries only the brief below, never your own reading of the ADR.
+In one message, launch every reviewer that applies as a background `general-purpose` subagent, so each starts with a fresh context and its prompt carries only the brief below, never your own reading of the ADR. When the user asks for the review to use context from the conversation, fork each reviewer instead (`subagent_type: "fork"`, which runs on your own model) and add to its prompt what from the conversation to weigh.
 
 | Reviewer | Launch when | Model |
 |---|---|---|
