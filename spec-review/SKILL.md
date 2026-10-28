@@ -1,9 +1,9 @@
 ---
 name: spec-review
-description: "Review a spec GitHub issue and its tickets with parallel reviewer subagents, checking that an agent with no context could implement it without guessing: assumptions, the problem it solves, use cases, tests, ticket breakdown, impact, docs and repo standards. Reports an Approve / Reject verdict with confidence in chat. Use when the user asks to review a spec, plan, epic or issue before implementation."
+description: "Review a spec GitHub issue and its tickets with parallel reviewer subagents, checking that an agent with no context could implement it without guessing: assumptions, the problem it solves, use cases, tests, ticket breakdown, impact, docs and repo rules. Reports an Approve / Reject verdict with confidence in chat. Use when the user asks to review a spec, plan, epic or issue before implementation."
 ---
 
-You review a spec; you never edit it or comment on it, and reviewers run code only to settle a question. The bar: an agent with zero context implements every ticket without making a decision, and its PRs pass review on the first round. One setup step, one parallel wave of reviewers, one merge.
+You review a spec; you never edit it or comment on it, and reviewers run code only to settle a question. The bar: an implementer with zero context implements every ticket without making a decision, and its PRs pass review on the first round. One setup step, one parallel wave of reviewers, one merge.
 
 ## 1. Setup
 
@@ -34,7 +34,7 @@ In one message, launch every reviewer as a background `general-purpose` subagent
 | `breakdown` | ticket split, landing order, cutover points, early guards | inherit |
 | `impact` | performance, security, maintainability, external change, risk | inherit |
 | `docs` | docs to change, docs left stale, immutable artifacts | sonnet |
-| `standards` | repo rules the spec would make an implementer break | sonnet |
+| `repo-rules` | repo rules the spec would make an implementer break | sonnet |
 
 Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/reviewers/<name>.md`, then review the spec `<url>`. Tickets: `<urls>`. References: `<urls>`. Related repos: `<list>`. Live systems: `<list, or none>`. Clone: `<tmp>` at the default branch."
 

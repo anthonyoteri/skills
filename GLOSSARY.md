@@ -21,7 +21,7 @@ How strong the evidence behind the verdict is: High, Medium or Low, lowered by e
 _Avoid_: Certainty, score, Extreme
 
 **Severity**:
-How much a finding matters: Blocking (merging ships a defect, a vulnerability, or a break of a documented repo rule), Should fix, or Nit.
+How much a finding matters: Blocking (merging, or implementing the spec as written, ships a defect, a vulnerability, or a break of a documented repo rule; or, for a spec, leaves the implementer to guess or the problem unsolved), Should fix, or Nit.
 _Avoid_: Priority, level, Critical/High/Medium/Low
 
 **Reviewer**:
