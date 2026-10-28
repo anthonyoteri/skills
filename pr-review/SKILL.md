@@ -17,7 +17,7 @@ Resolve the PR to `<owner>/<repo>` and `<n>` (from a URL, `<owner>/<repo>#<n>`, 
 
 **Rounds**: when an earlier round in this conversation reviewed this PR, or the user gives `since <sha>`, this round is **incremental** from that round's head `<since>`, unless the user asks for `full`. Fetch it (`git -C <tmp> fetch -q origin <since>`); if that fails or `<since>` isn't an ancestor of `HEAD`, as after a force push, review the whole PR. In an incremental round, the changed files and size below come from `<since>..HEAD`, keeping only files the PR itself changes (`origin/<baseRefName>...HEAD`), so a merge from the base branch doesn't count.
 
-Sort the changed files. **Prose**: docs, READMEs, changelogs, ADRs, agent instructions (skills, `AGENTS.md`, `CLAUDE.md`, prompts), comment-only edits. **Code**: everything else, including config, CI and build files.
+Sort the changed files. **ADRs**: files in the repo's ADR directory, when the `adr-review` skill is installed; otherwise they are prose. **Prose**: docs, READMEs, changelogs, agent instructions (skills, `AGENTS.md`, `CLAUDE.md`, prompts), comment-only edits. **Code**: everything else, including config, CI and build files.
 
 The code's **size** is its added lines, summed over the code files in `git -C <tmp> diff --numstat origin/<baseRefName>...HEAD`, leaving out lockfiles and **generated** files, the ones the base branch's `.gitattributes` marks `linguist-generated`.
 
@@ -40,7 +40,7 @@ If the size is more than one reviewer can read with care (about 1,500 lines of P
 
 Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/reviewers/<name>.md`, then review PR `<url>`. Clone: `<tmp>`, PR checked out, base `origin/<baseRefName>`. Your files: `<list>`. Spec: `<issue text, or 'the PR description'>`. Repo visibility: `<visibility>`." In an incremental round, add "Since: `<since>`" to every prompt but `metadata`'s, and give each reviewer the earlier rounds' findings in its area that the user didn't reject or defer. Tell `design` whether a code review skill is running, and `metadata` and `context` whether the code was batched.
 
-While they run, run the code review skill yourself from inside `<tmp>`, giving it `<since>` in an incremental round, otherwise `origin/<baseRefName>`, as the fixed point and the spec, so it never stops to ask.
+While they run, run the code review skill yourself from inside `<tmp>`, giving it `<since>` in an incremental round, otherwise `origin/<baseRefName>`, as the fixed point and the spec, so it never stops to ask. Then run `adr-review` from inside `<tmp>` on each ADR, by path.
 
 ## 3. Verdict
 
@@ -67,4 +67,4 @@ F1 `src/x.py:42` (behavior): <problem>. Fix: <one line>.
 - <lint rule or CI step>: would have caught F3, F5
 ```
 
-Omit empty sections. Merge the code review skill's findings with the reviewers', giving each a severity. Report each finding once: list under Automate this only automation that isn't already a finding's fix.
+Omit empty sections. Merge the findings of the code review skill and `adr-review` with the reviewers', giving each a severity. Report each finding once: list under Automate this only automation that isn't already a finding's fix.
