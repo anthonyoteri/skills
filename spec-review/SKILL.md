@@ -43,7 +43,6 @@ Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/revie
 When every reviewer has returned, merge duplicate findings, keep the higher severity, and number them `F1`, `F2`, … in report order. Delete `<tmp>`.
 
 - **Verdict**: Reject if any finding is Blocking, naming in the header the findings whose fixes would turn it to Approve; otherwise Approve. Should fix and Nits never hold up approval.
-- **Rulings**: drop any finding the user rejected or deferred in an earlier round of this conversation, unless what it's about has changed since, and give the count in the header.
 - **Confidence**: start at High and drop one step, to a floor of Low, for each gap: a reference or related repo out of reach; a reviewer that failed or returned nothing; a spec too large to read in full; no test suite timing from `tests`. Confidence never changes the verdict.
 
 Reply in chat:
