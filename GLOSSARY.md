@@ -1,15 +1,15 @@
 # Reviews
 
-The language of the `pr-review` and `spec-review` skills: how a pull request or a spec is judged and how the judgment is reported.
+The language of the `pr-review`, `spec-review` and `adr-review` skills: how a pull request, a spec or an ADR is judged and how the judgment is reported.
 
 ## Language
 
 **Finding**:
-One problem a reviewer found in the pull request or spec, with its location, evidence and a suggested fix.
+One problem a reviewer found in the pull request, spec or ADR, with its location, evidence and a suggested fix.
 _Avoid_: Issue, comment, note
 
 **Verdict**:
-The review's single outcome for the pull request or spec: Reject when any finding is Blocking or Should fix, otherwise Approve.
+The review's single outcome: Reject when any finding is Blocking or Should fix, otherwise Approve. For a merged ADR: Keep, Supersede or Reject.
 _Avoid_: Recommendation, decision, request changes
 
 **CI status**:
@@ -25,7 +25,7 @@ How much a finding matters: Blocking (merging, or implementing the spec as writt
 _Avoid_: Priority, level, Critical/High/Medium/Low
 
 **Reviewer**:
-A subagent that examines one area of the pull request or spec and reports findings, starting from a fresh context.
+A subagent that examines one area of the pull request, spec or ADR and reports findings, starting from a fresh context.
 _Avoid_: Angle, agent, checker
 
 **Code review skill**:
@@ -67,3 +67,23 @@ _Avoid_: Standards, house style
 **Best practices**:
 The widely accepted conventions a reviewer applies where the repo rules are silent.
 _Avoid_: Defaults
+
+**ADR**:
+An architectural decision record: a decision that is architectural, hard to reverse and non-obvious, which once merged binds every later change until a superseding ADR replaces it.
+_Avoid_: Design doc, RFC, decision log
+
+**Warrant**:
+Whether an ADR deserves to exist: it passes all three tests (architectural, hard to reverse, non-obvious), and fails if any is questionable.
+_Avoid_: Justification, eligibility
+
+**Intent**:
+What an ADR's decision requires of the code. It can't change after merge; wording that keeps it exactly, and metadata, can.
+_Avoid_: Meaning, spirit
+
+**Supersede**:
+Replace a merged ADR's decision with a new ADR, leaving the old one in place with its status updated.
+_Avoid_: Amend, override
+
+**Grandfathered**:
+Code that existed before an ADR merged, which that ADR doesn't bind.
+_Avoid_: Legacy, exempt
