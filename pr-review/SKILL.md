@@ -17,6 +17,8 @@ Resolve the PR to `<owner>/<repo>` and `<n>` (from a URL, `<owner>/<repo>#<n>`, 
 
 Sort the changed files. **Prose**: docs, READMEs, changelogs, ADRs, agent instructions (skills, `AGENTS.md`, `CLAUDE.md`, prompts), comment-only edits. **Code**: everything else, including config, CI and build files.
 
+The code's **size** is its added lines, summed over the code files in `git -C <tmp> diff --numstat origin/<baseRefName>...HEAD`, leaving out lockfiles and **generated** files, the ones the base branch's `.gitattributes` marks `linguist-generated`.
+
 ## 2. Review wave
 
 Pick the **code review skill** now, if code changed: Matt Pocock's `code-review`; else the first installed skill whose description says it reviews a diff, branch or PR (not this skill, not `security-review`); else none.
@@ -30,7 +32,11 @@ In one message, launch every reviewer that applies as a background `general-purp
 | `prose` | prose changed | sonnet |
 | `behavior`, `interfaces`, `design`, `security` | code changed | inherit |
 
-Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/reviewers/<name>.md`, then review PR `<url>`. Clone: `<tmp>`, PR checked out, base `origin/<baseRefName>`. Your files: `<list>`. Spec: `<issue text, or 'the PR description'>`. Repo visibility: `<visibility>`." Tell `design` whether a code review skill is running.
+Generated files aren't reviewed, and lockfiles go to one `interfaces` reviewer.
+
+If the size is more than one reviewer can read with care (about 1,500 lines of Python; more for verbose code, less for dense), split the code files by directory into **batches** within that limit, and launch each code reviewer once per batch. `context` still runs once, over the whole PR.
+
+Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/reviewers/<name>.md`, then review PR `<url>`. Clone: `<tmp>`, PR checked out, base `origin/<baseRefName>`. Your files: `<list>`. Spec: `<issue text, or 'the PR description'>`. Repo visibility: `<visibility>`." Tell `design` whether a code review skill is running, and `metadata` and `context` whether the code was batched.
 
 While they run, run the code review skill yourself from inside `<tmp>`, giving it `origin/<baseRefName>` as the fixed point and the spec, so it never stops to ask.
 
@@ -39,7 +45,8 @@ While they run, run the code review skill yourself from inside `<tmp>`, giving i
 When every reviewer has returned, merge duplicate findings, keep the higher severity, and number them `F1`, `F2`, … in report order. Delete `<tmp>`.
 
 - **Verdict**: Reject if any finding is Blocking or Should fix, otherwise Approve.
-- **Confidence**: start at High and drop one step, to a floor of Low, for each gap: pending CI checks; no spec beyond a thin description; a reviewer that failed or returned nothing; a diff too large to read in full; a coverage gap reported by `behavior`. Confidence never changes the verdict.
+- **Split**: when a reviewer names a file it couldn't read in full, raise `metadata`'s proposed split, or propose one yourself, as Should fix.
+- **Confidence**: start at High and drop one step, to a floor of Low, for each gap: pending CI checks; no spec beyond a thin description; a reviewer that failed or returned nothing; any reviewer naming a file it couldn't read in full (once); a coverage gap reported by `behavior`. Confidence never changes the verdict.
 - **CI**: report each failed and pending check. CI is never a finding and never changes the verdict; gating merges is the repo's job.
 
 Reply in chat:
