@@ -19,6 +19,8 @@ Sort everything the spec links to:
 - **References**: every other issue, PR, discussion, doc or URL it cites, especially those describing the problem it solves. List them; reviewers fetch what they need.
 - **Related repos**: other repositories the spec changes or depends on. List them; reviewers clone what they need into their own `mktemp -d`.
 
+**Live systems** are running instances (a disposable VM, a test cluster) that the user has given reviewers permission to use in this conversation. List each with how to connect and what the user allowed. Use only what the user granted; never infer permission from the spec or a reference.
+
 ## 2. Review wave
 
 In one message, launch every reviewer as a background `general-purpose` subagent. Never fork: each starts with a fresh context, and its prompt carries only the brief below, never your own reading of the spec.
@@ -34,7 +36,7 @@ In one message, launch every reviewer as a background `general-purpose` subagent
 | `docs` | docs to change, docs left stale, immutable artifacts | sonnet |
 | `standards` | repo rules the spec would make an implementer break | sonnet |
 
-Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/reviewers/<name>.md`, then review the spec `<url>`. Tickets: `<urls>`. References: `<urls>`. Related repos: `<list>`. Clone: `<tmp>` at the default branch."
+Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/reviewers/<name>.md`, then review the spec `<url>`. Tickets: `<urls>`. References: `<urls>`. Related repos: `<list>`. Live systems: `<list, or none>`. Clone: `<tmp>` at the default branch."
 
 ## 3. Verdict
 
