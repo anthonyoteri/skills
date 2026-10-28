@@ -6,4 +6,4 @@ Review how the change fits the code around it. Read each changed file in full, t
 - **Complete**: every other place that must change with it did: other callers, parallel implementations, and the same rule or fact stated elsewhere.
 - **Coherent**: each file still reads as one piece after the change, with no orphaned code, stale references, or sections that now disagree.
 
-Report only problems the change creates or completes. Cite unchanged code as evidence, never as a finding of its own.
+Leave public-doc consistency to `interfaces` and coding standards to `design`. Report only problems the change creates or completes. Cite unchanged code as evidence, never as a finding of its own.
