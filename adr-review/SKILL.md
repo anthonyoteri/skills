@@ -12,6 +12,7 @@ Resolve the argument (a path, or an ADR number or title) to `<path>` in the curr
 - `git fetch -q origin` and find `<default>` with `git symbolic-ref --short refs/remotes/origin/HEAD`.
 - `git log origin/<default> --diff-filter=A --format='%H %as' -- <path>`: the commit and date the ADR **merged**. Empty means it hasn't.
 - `git diff origin/<default> -- <path>`: pending **edits** to a merged ADR.
+- `git diff --stat origin/<default>...HEAD -- . ':!<path>'`: **code alongside** the ADR on this branch, which lands with it in the same pull request.
 - List the repo's other ADRs and their statuses, from the same directory.
 
 The ADR is **pre-merge** when it isn't on `origin/<default>`, otherwise **merged**.
@@ -26,16 +27,16 @@ In one message, launch every reviewer that applies as a background `general-purp
 | `precedent` | always | sonnet |
 | `claims` | pre-merge | inherit |
 | `wording` | pre-merge | sonnet |
-| `compliance` | merged | inherit |
+| `compliance` | merged, or with code alongside | inherit |
 | `edits` | merged, with pending edits | sonnet |
 
-Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/reviewers/<name>.md`, then review the ADR at `<path>` in `<repo root>`. State: `<pre-merge, or merged at <sha> on <date>>`. Default branch: `origin/<default>`. Other ADRs: `<list with statuses>`."
+Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/reviewers/<name>.md`, then review the ADR at `<path>` in `<repo root>`. State: `<pre-merge, or merged at <sha> on <date>>`. Code alongside: `<files, or none>`. Default branch: `origin/<default>`. Other ADRs: `<list with statuses>`."
 
 ## 3. Verdict
 
 When every reviewer has returned, merge duplicate findings, keep the higher severity, and number them `F1`, `F2`, … in report order.
 
-- **Pre-merge verdict**: Reject if any finding is Blocking or Should fix, otherwise Approve.
+- **Pre-merge verdict**: Reject if any finding is Blocking or Should fix, or if code alongside violates the ADR, otherwise Approve.
 - **Merged verdict**: **Keep**, **Supersede** with the replacement ADR text `warrant` proposed, or **Reject** with no replacement. Reject only on significant just cause: evidence that the decision is now wrong and that no decision should take its place. Pending edits that change intent are rejected separately, whatever the verdict.
 - **Confidence**: start at High and drop one step, to a floor of Low, for each gap: a reviewer that failed or returned nothing; a claim or rule no reviewer could check; for a merged ADR, history too large to read since the merge. Confidence never changes the verdict.
 

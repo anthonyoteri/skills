@@ -85,5 +85,5 @@ Replace a merged ADR's decision with a new ADR, leaving the old one in place wit
 _Avoid_: Amend, override
 
 **Grandfathered**:
-Code that existed before an ADR merged, which that ADR doesn't bind.
+Code that existed before an ADR merged, which that ADR doesn't bind. Code landing with the ADR, in the same pull request or commit, is bound.
 _Avoid_: Legacy, exempt
