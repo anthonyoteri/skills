@@ -17,7 +17,7 @@ Resolve the PR to `<owner>/<repo>` and `<n>` (from a URL, `<owner>/<repo>#<n>`, 
 
 Sort the changed files. **Prose**: docs, READMEs, changelogs, ADRs, agent instructions (skills, `AGENTS.md`, `CLAUDE.md`, prompts), comment-only edits. **Code**: everything else, including config, CI and build files.
 
-The code's **size** is its added lines, summed over the code files in `git -C <tmp> diff --numstat origin/<baseRefName>...HEAD`, leaving out lockfiles and files the base branch's `.gitattributes` marks `linguist-generated`.
+The code's **size** is its added lines, summed over the code files in `git -C <tmp> diff --numstat origin/<baseRefName>...HEAD`, leaving out lockfiles and **generated** files, the ones the base branch's `.gitattributes` marks `linguist-generated`.
 
 ## 2. Review wave
 
@@ -32,7 +32,7 @@ In one message, launch every reviewer that applies as a background `general-purp
 | `prose` | prose changed | sonnet |
 | `behavior`, `interfaces`, `design`, `security` | code changed | inherit |
 
-Those generated files aren't reviewed, and lockfiles go to one `interfaces` reviewer.
+Generated files aren't reviewed, and lockfiles go to one `interfaces` reviewer.
 
 If the size is more than one reviewer can read with care (about 1,500 lines of Python; more for verbose code, less for dense), split the code files by directory into **batches** within that limit, and launch `context` and each code reviewer once per batch. `context` takes the prose files as one more batch.
 

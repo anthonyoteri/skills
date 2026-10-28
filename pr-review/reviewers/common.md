@@ -14,4 +14,4 @@ Report each finding on one line, at most 300 words in all:
 <Severity> `file:line` <problem>. Evidence: <short quote or output>. Fix: <one line>. Automate: <lint rule or CI step that would catch it, if any>
 ```
 
-End with one line listing what you checked and found clean, and one line naming any of your files you couldn't read in full. If you found nothing, say so.
+End with one line listing what you checked and found clean, and one line naming any of your files you needed to read in full but couldn't. If you found nothing, say so.
