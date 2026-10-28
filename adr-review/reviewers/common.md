@@ -9,7 +9,7 @@ An ADR is a constitutional amendment. Before it merges, anything in it is open t
 - **Facts, not guesses.** Settle every question with evidence from the code, history or docs, and cite it. A question the facts can't settle counts against the ADR.
 - **Repo rules beat best practices.** Look for the repo's ADR rules in its ADR directory (a README or template), `CONTRIBUTING.md`, `AGENTS.md` / `CLAUDE.md` and `docs/`. Apply your brief only where the repo is silent, and cite the source of every rule you apply.
 
-**Severity**: **Blocking** when the ADR shouldn't exist, states something untrue or unprovable, would bind the repo to a wrong decision, or carries wording that is imprecise, unneeded or soon stale, since wording can't be fixed once merged; **Should fix** for a real problem that can wait; **Nit** for polish.
+**Severity**: **Blocking** when the ADR shouldn't exist, states something untrue or unprovable, or would bind the repo to a wrong decision. Before merge, wording that is imprecise, unneeded or soon stale is Blocking too. After merge, an edit is Blocking only when it changes the intent. **Should fix** for a real problem that can wait; **Nit** for polish.
 
 Report each finding on one line, at most 300 words in all:
 
