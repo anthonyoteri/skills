@@ -17,7 +17,7 @@ Resolve the PR to `<owner>/<repo>` and `<n>` (from a URL, `<owner>/<repo>#<n>`, 
 
 Sort the changed files. **Prose**: docs, READMEs, changelogs, ADRs, agent instructions (skills, `AGENTS.md`, `CLAUDE.md`, prompts), comment-only edits. **Code**: everything else, including config, CI and build files.
 
-Measure the code's **size** in added lines (the `additions` of each file from `gh pr view`). Deleted lines don't count, and neither do lockfiles or generated files (marked `linguist-generated` or `-diff` in `.gitattributes`); lockfiles go only to `interfaces`.
+Measure the code's **size** in added lines (the `additions` of each file from `gh pr view`). Deleted lines don't count, and neither do lockfiles or generated files (marked `linguist-generated` or `-diff` in `.gitattributes`).
 
 ## 2. Review wave
 
@@ -32,9 +32,9 @@ In one message, launch every reviewer that applies as a background `general-purp
 | `prose` | prose changed | sonnet |
 | `behavior`, `interfaces`, `design`, `security` | code changed | inherit |
 
-When the code adds more than 1,500 lines, split the code files into **batches** by directory, each under 1,500 added lines; split a directory over the limit by its subdirectories, and give a file over the limit a batch of its own. Launch `context` and each code reviewer once per batch, in the same wave, with that batch as its files; the prose files form one more batch for `context`.
+When the size is over 1,500 lines, split the code files into **batches** by directory, each at most 1,500 lines of size; split a directory over the limit by its subdirectories, and give a file over the limit a batch of its own. Launch `context` and each code reviewer once per batch, in the same wave, with that batch as its files; the prose files form one more batch for `context`. Lockfiles go to one `interfaces` reviewer; generated files aren't reviewed.
 
-Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/reviewers/<name>.md`, then review PR `<url>`. Clone: `<tmp>`, PR checked out, base `origin/<baseRefName>`. Your files: `<list>`. Spec: `<issue text, or 'the PR description'>`. Repo visibility: `<visibility>`." Tell `design` whether a code review skill is running.
+Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/reviewers/<name>.md`, then review PR `<url>`. Clone: `<tmp>`, PR checked out, base `origin/<baseRefName>`. Your files: `<list>`. Spec: `<issue text, or 'the PR description'>`. Repo visibility: `<visibility>`." Tell `design` whether a code review skill is running, and `metadata` the size.
 
 While they run, run the code review skill yourself from inside `<tmp>`, giving it `origin/<baseRefName>` as the fixed point and the spec, so it never stops to ask.
 
@@ -42,8 +42,8 @@ While they run, run the code review skill yourself from inside `<tmp>`, giving i
 
 When every reviewer has returned, merge duplicate findings, keep the higher severity, and number them `F1`, `F2`, … in report order. Delete `<tmp>`.
 
-- **Verdict**: Reject if any finding is Blocking or Should fix, otherwise Approve.
-- **Confidence**: start at High and drop one step, to a floor of Low, for each gap: pending CI checks; no spec beyond a thin description; a reviewer that failed or returned nothing; a reviewer that names a file it couldn't read in full; a coverage gap reported by `behavior`. Confidence never changes the verdict.
+- **Verdict**: Reject if any finding is Blocking or Should fix, otherwise Approve. When a reviewer names a file it couldn't read in full, `metadata`'s proposed split is Should fix.
+- **Confidence**: start at High and drop one step, to a floor of Low, for each gap: pending CI checks; no spec beyond a thin description; a reviewer that failed or returned nothing; any reviewer naming a file it couldn't read in full, once however many do; a coverage gap reported by `behavior`. Confidence never changes the verdict.
 - **CI**: report each failed and pending check. CI is never a finding and never changes the verdict; gating merges is the repo's job.
 
 Reply in chat:

@@ -6,6 +6,8 @@ Review the PR's title, description, commits and issue links, plus any other PR r
 
 **Description**: fills the PR template if there is one. Otherwise it tells a reviewer what changed and why, how it was verified, and what could break.
 
+**Size**: when the size your prompt gives is over 1,500 lines, propose splitting the PR into smaller ones that each make sense on their own and land safely in order, naming the files in each. A Nit, unless repo rules set a size limit.
+
 **Issue links**: an issue the PR resolves is referenced with a closing keyword (`Closes #123`) so merging closes it; a bare mention won't.
 
 **Commits**: find the merge strategy from the repo's settings (`gh api repos/<owner>/<repo> --jq '{merge: .allow_merge_commit, rebase: .allow_rebase_merge, squash: .allow_squash_merge}'`, where `null` means unknown), documented policy, and `git log --merges` on the base branch.
