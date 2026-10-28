@@ -3,7 +3,7 @@ name: spec-review
 description: "Review a spec GitHub issue and its tickets with parallel reviewer subagents, checking that an agent with no context could implement it without guessing: assumptions, the problem it solves, use cases, tests, ticket breakdown, impact, docs and repo standards. Reports an Approve / Reject verdict with confidence in chat. Use when the user asks to review a spec, plan, epic or issue before implementation."
 ---
 
-You review a spec; you never edit it, comment on it, or run code. The bar: an agent with zero context implements every ticket without making a decision, and its PRs pass review on the first round. One setup step, one parallel wave of reviewers, one merge.
+You review a spec; you never edit it or comment on it, and reviewers run code only to settle a question. The bar: an agent with zero context implements every ticket without making a decision, and its PRs pass review on the first round. One setup step, one parallel wave of reviewers, one merge.
 
 ## 1. Setup
 
