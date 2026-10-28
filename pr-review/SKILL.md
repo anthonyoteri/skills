@@ -32,9 +32,9 @@ In one message, launch every reviewer that applies as a background `general-purp
 | `prose` | prose changed | sonnet |
 | `behavior`, `interfaces`, `design`, `security` | code changed | inherit |
 
-When the size is over 1,500 lines, split the code files into **batches** by directory, each at most 1,500 lines of size; split a directory over the limit by its subdirectories, and give a file over the limit a batch of its own. Launch `context` and each code reviewer once per batch, in the same wave, with that batch as its files; the prose files form one more batch for `context`. Lockfiles go to one `interfaces` reviewer; generated files aren't reviewed.
+When the code is more than one reviewer can read with care, split the code files into **batches** by directory, each within that limit; split a directory over the limit by its subdirectories, and give a file over the limit a batch of its own. Judge the limit from the code: about 1,500 lines of size for a high-level language like Python, more for verbose or low-level code like assembly, less for dense code. Launch `context` and each code reviewer once per batch, in the same wave, with that batch as its files; the prose files form one more batch for `context`. Lockfiles go to one `interfaces` reviewer; generated files aren't reviewed.
 
-Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/reviewers/<name>.md`, then review PR `<url>`. Clone: `<tmp>`, PR checked out, base `origin/<baseRefName>`. Your files: `<list>`. Spec: `<issue text, or 'the PR description'>`. Repo visibility: `<visibility>`." Tell `design` whether a code review skill is running, and `metadata` the size.
+Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/reviewers/<name>.md`, then review PR `<url>`. Clone: `<tmp>`, PR checked out, base `origin/<baseRefName>`. Your files: `<list>`. Spec: `<issue text, or 'the PR description'>`. Repo visibility: `<visibility>`." Tell `design` whether a code review skill is running, and `metadata` the size and whether the code was batched.
 
 While they run, run the code review skill yourself from inside `<tmp>`, giving it `origin/<baseRefName>` as the fixed point and the spec, so it never stops to ask.
 
