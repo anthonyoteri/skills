@@ -17,7 +17,7 @@ Resolve the PR to `<owner>/<repo>` and `<n>` (from a URL, `<owner>/<repo>#<n>`, 
 
 Sort the changed files. **Prose**: docs, READMEs, changelogs, ADRs, agent instructions (skills, `AGENTS.md`, `CLAUDE.md`, prompts), comment-only edits. **Code**: everything else, including config, CI and build files.
 
-Measure the code's **size** in added lines (the `additions` of each file from `gh pr view`). Deleted lines don't count, and neither do lockfiles or generated files (marked `linguist-generated` in `.gitattributes`). On every PR, lockfiles go to one `interfaces` reviewer and generated files aren't reviewed.
+The code's **size** is its added lines (`git -C <tmp> diff --numstat origin/<baseRefName>...HEAD`), leaving out lockfiles and files the base branch's `.gitattributes` marks `linguist-generated`.
 
 ## 2. Review wave
 
@@ -32,13 +32,11 @@ In one message, launch every reviewer that applies as a background `general-purp
 | `prose` | prose changed | sonnet |
 | `behavior`, `interfaces`, `design`, `security` | code changed | inherit |
 
-The **limit** is how much code one reviewer can read with care. Judge it from the code: about 1,500 lines of size for a high-level language like Python, more for verbose or low-level code like assembly, less for dense code. When the size is over the limit, split the code into **batches**:
+Generated files aren't reviewed. Lockfiles go to one `interfaces` reviewer, which checks only what dependencies changed.
 
-- Group the code files by directory, each batch within the limit; split a directory over the limit by its subdirectories, and give a file over the limit a batch of its own.
-- Launch `context` and each code reviewer once per batch, in the same wave, with that batch as its files.
-- The prose files form one more batch for `context`.
+If the size is more than one reviewer can read with care (about 1,500 lines of Python; more for verbose code, less for dense), split the code files by directory into **batches** within that limit, and launch `context` and each code reviewer once per batch. `context` takes the prose files as one more batch.
 
-Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/reviewers/<name>.md`, then review PR `<url>`. Clone: `<tmp>`, PR checked out, base `origin/<baseRefName>`. Your files: `<list>`. Spec: `<issue text, or 'the PR description'>`. Repo visibility: `<visibility>`." Tell `design` whether a code review skill is running, and `metadata` the size and whether the code was batched.
+Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/reviewers/<name>.md`, then review PR `<url>`. Clone: `<tmp>`, PR checked out, base `origin/<baseRefName>`. Your files: `<list>`. Spec: `<issue text, or 'the PR description'>`. Repo visibility: `<visibility>`." Tell `design` whether a code review skill is running, and `metadata` whether the code was batched.
 
 While they run, run the code review skill yourself from inside `<tmp>`, giving it `origin/<baseRefName>` as the fixed point and the spec, so it never stops to ask.
 
@@ -47,8 +45,8 @@ While they run, run the code review skill yourself from inside `<tmp>`, giving i
 When every reviewer has returned, merge duplicate findings, keep the higher severity, and number them `F1`, `F2`, … in report order. Delete `<tmp>`.
 
 - **Verdict**: Reject if any finding is Blocking or Should fix, otherwise Approve.
-- **Split**: when a reviewer names a file it couldn't read in full, add a Should fix finding that proposes splitting the PR, using `metadata`'s proposal if it made one; otherwise `metadata`'s proposal stays a Nit, unless repo rules set a size limit.
-- **Confidence**: start at High and drop one step, to a floor of Low, for each gap: pending CI checks; no spec beyond a thin description; a reviewer that failed or returned nothing; any reviewer naming a file it couldn't read in full, once however many do; a coverage gap reported by `behavior`. Confidence never changes the verdict.
+- **Split**: when a reviewer names a file it couldn't read in full, raise `metadata`'s proposed split, or propose one yourself, as Should fix.
+- **Confidence**: start at High and drop one step, to a floor of Low, for each gap: pending CI checks; no spec beyond a thin description; a reviewer that failed or returned nothing; any reviewer naming a file it couldn't read in full (once); a coverage gap reported by `behavior`. Confidence never changes the verdict.
 - **CI**: report each failed and pending check. CI is never a finding and never changes the verdict; gating merges is the repo's job.
 
 Reply in chat:
