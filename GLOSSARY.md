@@ -60,6 +60,10 @@ _Avoid_: Justification, eligibility
 What an ADR's decision requires of the code. The intent can't change after merge; only wording that preserves it, and metadata, may.
 _Avoid_: Meaning, spirit
 
+**Jurisdiction**:
+What a repo controls, and so all an ADR may bind: its own code, interfaces, builds and processes, never what consumers or other teams do.
+_Avoid_: Scope, ownership
+
 **Supersede**:
 Replace a merged ADR's decision with a new ADR, leaving the old one in place with its status updated.
 _Avoid_: Amend, override

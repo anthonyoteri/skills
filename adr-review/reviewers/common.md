@@ -13,7 +13,7 @@ When your prompt gives `Since: <since>, now <blob>`, earlier rounds reviewed the
 
 For each earlier finding in your prompt, say whether it is now fixed.
 
-**Severity**: **Blocking** when the ADR shouldn't exist, states something untrue or unprovable, or would bind the repo to a wrong decision. Before merge, wording that is imprecise, unneeded or soon stale is Blocking too. After merge, an edit is Blocking only when it changes the intent. **Should fix** for a real problem that can wait; **Nit** for polish.
+**Severity**: **Blocking** when the ADR shouldn't exist, states something untrue or unprovable, would bind the repo to a wrong decision, or dictates anything outside the repo's **jurisdiction**, what it controls. Before merge, wording that is imprecise, unneeded or soon stale is Blocking too. After merge, an edit is Blocking only when it changes the intent. **Should fix** for a real problem that can wait; **Nit** for polish.
 
 Report each finding on one line, at most 300 words in all:
 
