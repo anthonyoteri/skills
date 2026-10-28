@@ -8,4 +8,6 @@ Step back from the diff. Read each changed file in full, and the files around it
 
 When your prompt says the code was batched, don't read everything: start from the overview (`git diff --stat` and the new definitions) and search before you read, reading a file in full only where the change looks out of place.
 
+When your prompt gives a `Since` commit, the change is `git diff <since> HEAD`: judge it against the whole PR and the files around it.
+
 Leave completeness, test coverage and the correctness of the change itself to the other reviewers. Report only problems the change introduces; cite unchanged code as evidence, never as a finding of its own.
