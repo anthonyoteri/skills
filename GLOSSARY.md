@@ -28,6 +28,10 @@ _Avoid_: Requirements, specification, plan
 One issue the spec is split into, implemented and reviewed as one pull request.
 _Avoid_: Task, sub-task, story
 
+**Re-review**:
+A later round of a spec review that reads the whole spec again, given the spec's diff since the last round, the user's rulings and the previous verdict, and tags each Blocking finding new, regression or missed. Unlike an incremental round in pr-review or adr-review, it doesn't narrow to the changes.
+_Avoid_: Second pass, follow-up review
+
 **Deletion test**:
 Removing a use case from the spec and asking whether the outcome measurably changes. A use case that fails it adds nothing.
 _Avoid_: Necessity check
