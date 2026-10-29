@@ -46,9 +46,9 @@ While they run, run the code review skill yourself from inside `<tmp>`, giving i
 
 ## 3. Verdict
 
-When every reviewer has returned, merge duplicate findings, keep the higher severity, and number them `F1`, `F2`, … in report order. Delete `<tmp>`.
+When every reviewer has returned, merge duplicate findings and keep the higher severity. Re-check every finding, including those of the code review skill and `adr-review`, against the PR's goal (Follow-on in `reviewers/common.md`), and move any outside it to Follow-on whatever severity it was given. Number the rest `F1`, `F2`, … in report order. Delete `<tmp>`.
 
-- **Verdict**: Reject if any finding is Blocking, naming in the header the findings whose fixes would turn it to Approve; otherwise Approve. Should fix and Nits never hold up approval.
+- **Verdict**: Reject if any finding is Blocking, naming in the header the findings whose fixes would turn it to Approve; otherwise Approve. Should fix, Nits and Follow-on never hold up approval.
 - **Rulings**: drop any finding the user rejected or deferred in an earlier round of this conversation, unless what it's about has changed since, and give the count in the header.
 - **Split**: when a reviewer names a file it couldn't read in full, raise `metadata`'s proposed split, or propose one yourself, as Should fix.
 - **Confidence**: start at High and drop one step, to a floor of Low, for each gap: pending CI checks; no spec beyond a thin description; a reviewer that failed or returned nothing; any reviewer naming a file it couldn't read in full (once); a coverage gap reported by `behavior`. Confidence never changes the verdict.
@@ -57,7 +57,7 @@ When every reviewer has returned, merge duplicate findings, keep the higher seve
 Reply in chat:
 
 ```
-**Reject** · confidence Medium (2 checks pending) · approves once F1 is fixed · 1 Blocking, 2 Should fix, 3 Nits · 2 omitted per earlier rulings
+**Reject** · confidence Medium (2 checks pending) · approves once F1 is fixed · 1 Blocking, 2 Should fix, 3 Nits, 1 Follow-on · 2 omitted per earlier rulings
 Reviewed: `a1b2c3d` (incremental since `9f8e7d6`)
 CI: 🔴 lint failed · 🟡 2 pending · 🟢 5 passed
 
@@ -65,6 +65,8 @@ CI: 🔴 lint failed · 🟡 2 pending · 🟢 5 passed
 F1 `src/x.py:42` (behavior): <problem>. Fix: <one line>.
 ### Should fix
 ### Nits
+### Follow-on
+F7 `src/y.py:10` (design): <title for a separate issue>. Outside the goal: <why>.
 ### Automate this
 - <lint rule or CI step>: would have caught F3, F5
 ```
