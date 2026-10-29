@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Improve Codebase Compliance
 
-Surface where the codebase drifts from its coding standards, rank the drift, and walk the user to a **shared understanding** of what is worth changing. Treat every standard as a **guideline**: it records what the team usually wants, and a deviation can be deliberate, obsolete, or outside the rule's purpose. This skill changes no code; the user decides what to do with the result.
+Surface where the codebase drifts from its coding standards, rank the drift, and walk the user to a **shared understanding** of what is worth changing. Treat every standard as a **default, not an absolute**: it records what the team usually wants, and a deviation can be deliberate, obsolete, or outside the rule's purpose. This skill changes no code; the user decides what to do with the result.
 
 ## Process
 

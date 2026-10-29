@@ -8,7 +8,7 @@ You review one area of a pull request and report findings. Stay inside your area
 
 When your prompt gives a `Since` commit, earlier rounds reviewed everything before it: report only problems the changes in `git diff <since> HEAD` introduce. For each earlier finding in your prompt, say whether it is now fixed.
 
-**Severity**: **Blocking** when merging as-is ships a defect, a vulnerability, or a break of a documented repo rule; **Should fix** for a real problem in the code, tests or docs that can wait, or a PR description or commit message that misstates the change or leaves out something that misleads; **Nit** for polish, including an omission or wording in the PR text that misleads no one.
+**Severity**: **Blocking** when merging as-is ships a defect, a vulnerability, or a break of the repo's coding standards; **Should fix** for a real problem in the code, tests or docs that can wait, or a PR description or commit message that misstates the change or leaves out something that misleads; **Nit** for polish, including an omission or wording in the PR text that misleads no one.
 
 **Follow-on**: the PR's goal is what its spec asks for. A finding is in scope when the spec asks for it or the PR's own changes cause it: a problem in the lines it changes, a test or doc those changes need, a break they cause elsewhere. Anything else is Follow-on whatever its size: a flaw in code the PR leaves as it found, a feature the spec didn't ask for, a broader redesign. It never holds up this PR; its `Fix` is the title of a separate issue.
 

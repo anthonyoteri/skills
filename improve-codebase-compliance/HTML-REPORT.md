@@ -36,7 +36,7 @@ One `<article>` per batch, in rank order:
 - **Rule**: the quoted rule and its source, in a muted blockquote.
 - **Sites**: count, then a monospaced list of `path:line`, collapsed into a `<details>` past ten.
 - **Before / After**: two code blocks side by side on one representative site. The centerpiece.
-- **Write down the missing standards**: its card shows the guides used and the rules to adopt, in place of Sites and Before / After.
+- **Write down the missing standards**: its card shows the guides used and the rules that produced findings, in place of Sites and Before / After.
 - **Why it matters**: one sentence.
 - **Cost**: one sentence on effort and risk.
 - **Enforce with** (if a check exists): the tool, the rule, and the config snippet that turns it on.
