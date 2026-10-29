@@ -14,6 +14,8 @@ You review one area of a spec and its tickets and report findings. Stay inside y
 
 **Severity**: **Blocking** when implementing the spec as written ships a defect, a vulnerability, a break of a documented repo rule, or leaves the problem unsolved; or when an implementer would have to make a decision at spec level (a contract, a data shape, an architecture or module boundary, ordering between tickets), or any decision inside a ticket. While the spec has no tickets, a detail that one ticket would pin is **Should fix**, to be reviewed again with the tickets. Otherwise **Should fix** for a real problem that can wait; **Nit** for polish.
 
+**Scope**: the spec's intent is the problem it states and the outcome it commits to. Judge every finding against that intent before giving it a severity: it is in scope only when the spec, implemented as written, needs the fix to solve its own problem without a defect. Anything else (a pre-existing flaw in code the spec touches, a feature the spec didn't promise, a broader redesign, hardening beyond what the change introduces) is **Follow-on** whatever its size: work for a separate issue, never a change to this spec. Write its `Fix` as that issue's title.
+
 **Re-review**: when your prompt says re-review, review all of your sections as usual, and use the diff to tag each Blocking finding's origin: *new* in text added since, a *regression* in text changed since, or *missed* in unchanged text that earlier rounds read.
 
 Report each finding on one line, at most 300 words in all:
