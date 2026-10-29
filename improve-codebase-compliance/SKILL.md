@@ -1,6 +1,6 @@
 ---
 name: improve-codebase-compliance
-description: Audit the codebase against its coding standards (or language best practices when it has none), present ranked findings as a visual HTML report, then grill through whichever you pick.
+description: Audits the codebase against its coding standards (or language best practices when it has none), present ranked findings as a visual HTML report, then grill through whichever you pick.
 disable-model-invocation: true
 ---
 
@@ -11,6 +11,8 @@ Surface where the codebase drifts from its coding standards, rank the drift, and
 ## Process
 
 ### 1. Gather the standards
+
+Needs `git`, and the `grilling` skill for step 4.
 
 Search the repo for every file that documents how code should be written: `CODING_STANDARDS.md`, `CONTRIBUTING.md`, `AGENTS.md` / `CLAUDE.md`, style guides under `docs/`, ADRs in `docs/adr/`, and rules embedded in READMEs. When `CODING_STANDARDS.md` or `CONTRIBUTING.md` exists, it must be on the list.
 

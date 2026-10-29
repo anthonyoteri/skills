@@ -17,7 +17,7 @@ A Claude Code agent a skill launches with a fresh context to do one part of its 
 _Avoid_: Sub-agent, agent
 
 **Reviewer**:
-A subagent that examines one area and reports findings, starting from a fresh context.
+A subagent that examines one area and reports findings.
 _Avoid_: Angle, agent, checker
 
 **Code review skill**:

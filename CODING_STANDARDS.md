@@ -5,7 +5,7 @@ Skills follow Anthropic's [Skill authoring best practices](https://platform.clau
 ## Additions
 
 - **Terms**: use the terms in [GLOSSARY.md](GLOSSARY.md), not their _Avoid_ words.
-- **Tools**: a skill's setup step names every CLI it needs, and whether it must be authenticated (`gh auth status`). Another skill it uses is optional: say "if installed".
+- **Tools**: a skill's setup step names every CLI it needs, and whether it must be authenticated (`gh auth status`). It also names every other skill it needs, and says "if installed" for one it can do without.
 - **Spelling**: American English.
 
 ## Overrides
