@@ -1,5 +1,7 @@
 # Contributing
 
+Skills follow [CODING_STANDARDS.md](CODING_STANDARDS.md).
+
 ## Commits and pull request titles
 
 Use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/): `<type>(<scope>): <subject>`.
