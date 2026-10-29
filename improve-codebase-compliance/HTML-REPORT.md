@@ -16,7 +16,7 @@ One self-contained HTML file in the OS temp directory, styled with Tailwind from
     <main class="max-w-5xl mx-auto px-6 py-12 space-y-12">
       <header>...</header>
       <section id="sources">...</section>
-      <section id="candidates" class="space-y-10">...</section>
+      <section id="batches" class="space-y-10">...</section>
       <section id="top-recommendation">...</section>
     </main>
   </body>
@@ -25,14 +25,14 @@ One self-contained HTML file in the OS temp directory, styled with Tailwind from
 
 ## Header and sources
 
-Repo name, date, and totals (batches, sites, violations vs judgment calls). Then a compact table of standards sources: name, rule count, and a `Repo` or `Best practice` tag. When best practices were used, a prominent amber callout names the languages or areas the repo leaves undocumented and points at the standards candidate.
+Repo name, date, and totals (batches, sites, violations vs judgment calls). Then a compact table of standards sources: name, rule count, and a `Repo` or `Best practice` tag. When best practices were used, a prominent amber callout names the languages or areas the repo leaves undocumented and points at the **Write down the missing standards** batch.
 
-## Candidate card
+## Batch card
 
 One `<article>` per batch, in rank order:
 
 - **Title**: names the change (e.g. "Replace bare `except:` with typed handlers").
-- **Badge row**: rank, priority (`High` = red, `Medium` = amber, `Low` = slate), confidence (`Violation` or `Judgment call`), source tag (`Repo` or `Best practice`).
+- **Badge row**: rank, priority (`High` = red, `Medium` = amber, `Low` = slate), kind (`Violation` or `Judgment call`), source tag (`Repo` or `Best practice`).
 - **Rule**: the quoted rule and its source, in a muted blockquote.
 - **Sites**: count, then a monospaced list of `path:line`, collapsed into a `<details>` past ten.
 - **Before / After**: two code blocks side by side on one representative site. The centerpiece.
