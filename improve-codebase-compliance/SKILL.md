@@ -52,13 +52,15 @@ For each batch, look for a static lint or check that would enforce its rule from
 
 When any rule came from best practices, the top-ranked batch is always **Write down the missing standards**, however few best-practice findings there were. Its starting content is the guides you used and the rules that produced findings.
 
+Then gather the batches into at most five **groups**: the units the user picks and grills, so a long list of batches becomes a few decisions. Batches join a group when one decision settles them together (a shared term, a shared reading of a rule) or when their fixes touch the same files, so one change carries them without conflicting edits. Rank the groups by their highest-ranked batch. **Write down the missing standards** is always a group of its own, first. Batches that fit none of the five go to a final **Later** group, listed but not offered for grilling in this run.
+
 Write a self-contained HTML file to the OS temp directory so nothing lands in the repo. Resolve the temp dir from `$TMPDIR`, falling back to `/tmp` (or `%TEMP%` on Windows), and write to `<tmpdir>/compliance-review-<timestamp>.html`. Open it for the user (`open` on macOS, `xdg-open` on Linux, `start` on Windows) and tell them the absolute path. See [HTML-REPORT.md](HTML-REPORT.md) for the scaffold and card format.
 
-After the file is written, ask the user: "Which of these would you like to explore?"
+After the file is written, ask the user: "Which of these groups would you like to explore?"
 
 ### 4. Grill to a shared understanding
 
-Once the user picks one or more batches, call the Skill tool with "grilling" and walk each one. The design tree for a batch covers:
+Once the user picks a group, call the Skill tool with "grilling" and walk it: first the decisions its batches share, then each batch. The design tree for a batch covers:
 
 - **Applicability**: does the rule's purpose actually bear on these sites, or only its letter?
 - **Exception**: is the deviation deliberate? Read the history (`git log -L`, blame, linked issues) before asking; facts are yours to find.
@@ -69,4 +71,4 @@ Once the user picks one or more batches, call the Skill tool with "grilling" and
 
 For the **Write down the missing standards** batch, the tree is which rules to adopt, which to reject, and where they go: an existing standards file to extend, or a new one. Ask the user, then write them there once they confirm the content.
 
-Done when every picked batch has an agreed reach, fix shape, and file list, or is dropped, and the user confirms the shared understanding. Close with a summary of the agreed scope per batch, including its agreed lint or check, plus any deliberate exceptions uncovered that the user may want to record, so the next audit skips them.
+Done when every batch in the picked group has an agreed reach, fix shape, and file list, or is dropped, and the user confirms the shared understanding. Close with a summary of the group's agreed scope, one change that carries all of it, per batch including its agreed lint or check, plus any deliberate exceptions uncovered that the user may want to record, so the next audit skips them.

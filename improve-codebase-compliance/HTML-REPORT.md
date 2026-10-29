@@ -16,7 +16,7 @@ One self-contained HTML file in the OS temp directory, styled with Tailwind from
     <main class="max-w-5xl mx-auto px-6 py-12 space-y-12">
       <header>...</header>
       <section id="sources">...</section>
-      <section id="batches" class="space-y-10">...</section>
+      <section id="groups" class="space-y-16">...</section>
       <section id="top-recommendation">...</section>
     </main>
   </body>
@@ -25,11 +25,15 @@ One self-contained HTML file in the OS temp directory, styled with Tailwind from
 
 ## Header and sources
 
-Repo name, date, and totals (batches, sites, violations vs judgment calls). Then a compact table of standards sources: name, rule count, and a `Repo` or `Best practice` tag. When best practices were used, a prominent amber callout names the languages or areas the repo leaves undocumented and points at the **Write down the missing standards** batch.
+Repo name, date, and totals (groups, batches, sites, violations vs judgment calls). Then a compact table of standards sources: name, rule count, and a `Repo` or `Best practice` tag. When best practices were used, a prominent amber callout names the languages or areas the repo leaves undocumented and points at the **Write down the missing standards** batch.
+
+## Group section
+
+One `<section>` per group, in rank order: a title naming the shared decision or files, one line on why its batches belong together, the files it touches, then its batch cards. The **Later** group is a collapsed `<details>` listing batch titles only.
 
 ## Batch card
 
-One `<article>` per batch, in rank order:
+One `<article>` per batch, inside its group, in rank order:
 
 - **Title**: names the change (e.g. "Replace bare `except:` with typed handlers").
 - **Badge row**: rank, priority (`High` = red, `Medium` = amber, `Low` = slate), kind (`Violation` or `Judgment call`), source tag (`Repo` or `Best practice`).
@@ -44,7 +48,7 @@ One `<article>` per batch, in rank order:
 
 ## Top recommendation
 
-One larger card: the batch you'd tackle first, one sentence on why, an anchor link to its card.
+One larger card: the group you'd tackle first, one sentence on why, an anchor link to its card.
 
 ## Style
 
