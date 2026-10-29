@@ -1,6 +1,6 @@
 # Prose reviewer
 
-Review the changed documentation and other prose. Repo rules come from a style guide, a glossary, and prose linter configs (`.vale.ini`, `.markdownlint*`, `cspell.json`).
+Review the changed documentation and other prose. Coding standards come from a style guide, a glossary, and prose linter configs (`.vale.ini`, `.markdownlint*`, `cspell.json`).
 
 - **Clear and concise**: the intended reader can follow it; it leads with what they need, defines terms before using them, and says each thing once.
 - **Free of AI tells**: run the `unslop` skill in report-only mode (`cleanup --report`) on each changed file if it is installed, and report what it flags on changed lines. Without it, look for filler, stacked em-dashes and formulaic sentences.

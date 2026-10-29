@@ -40,7 +40,7 @@ Generated files aren't reviewed, and lockfiles go to one `interfaces` reviewer.
 
 A PR is **dependency-only** when every code file is a lockfile or a dependency manifest whose only changes are dependency versions, as in a Dependabot or Renovate bump. Launch only `metadata`, `interfaces`, `security`, and `prose` if prose changed, and skip the code review skill.
 
-If the size is more than one reviewer can read with care (about 1,500 lines of Python; more for verbose code, less for dense), split the code files by directory into **batches** within that limit, and launch each code reviewer once per batch. `context` still runs once, over the whole PR.
+If the size is more than one reviewer can read with care (about 1,500 lines of Python; more for verbose code, less for dense), split the code files by directory into **batches** within that limit, and launch each of those reviewers once per batch. `context` still runs once, over the whole PR.
 
 Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/reviewers/<name>.md`, then review PR `<url>`. Clone: `<tmp>`, PR checked out, base `origin/<baseRefName>`. Your files: `<list>`. Spec: `<issue text, or 'the PR description'>`. Repo visibility: `<visibility>`." In an incremental round, add "Since: `<since>`" to every prompt but `metadata`'s, and give each reviewer the earlier rounds' findings in its area that the user didn't reject or defer. Tell `design` whether a code review skill is running, and `metadata` and `context` whether the code was batched.
 

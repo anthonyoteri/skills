@@ -1,6 +1,6 @@
 ---
 name: spec-review
-description: "Reviews a spec GitHub issue and its tickets with parallel reviewer subagents, checking that an agent with no context could implement it without guessing: assumptions, the problem it solves, use cases, tests, ticket breakdown, impact, docs and repo rules. Reports an Approve / Reject verdict with confidence in chat. Use when the user asks to review a spec, plan, epic or issue before implementation."
+description: "Reviews a spec GitHub issue and its tickets with parallel reviewer subagents, checking that an agent with no context could implement it without guessing: assumptions, the problem it solves, use cases, tests, ticket breakdown, impact, docs and coding standards. Reports an Approve / Reject verdict with confidence in chat. Use when the user asks to review a spec, plan, epic or issue before implementation."
 ---
 
 You review a spec; you never edit it or comment on it, and reviewers run code only to settle a question. The bar: an implementer with zero context implements every ticket without making a decision, and its PRs pass review on the first round. One setup step, one parallel wave of reviewers, one merge.
@@ -44,9 +44,9 @@ In one message, launch every reviewer as a background `general-purpose` subagent
 | `use-cases` | the deletion test on each use case | sonnet |
 | `tests` | test levels, coverage, suite cost | inherit |
 | `breakdown` | ticket split, landing order, cutover points, early guards | inherit |
-| `impact` | performance, security, maintainability, external change, risk | inherit |
+| `impact` | performance, security, maintainability, external change, door | inherit |
 | `docs` | docs to change, docs left stale, immutable artifacts | sonnet |
-| `repo-rules` | repo rules the spec would make an implementer break | sonnet |
+| `coding-standards` | coding standards the spec would make an implementer break | sonnet |
 
 If the size is more than one reviewer can read with care (about 800 lines), split the spec and its tickets by section into **batches** within that limit, and launch each reviewer once per batch. `problem` and `breakdown` still run once, over the whole spec. If a single section is still more than one reviewer can read, as with a long inventory, review it anyway and raise splitting the spec as Should fix.
 
@@ -57,7 +57,7 @@ Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/revie
 When every reviewer has returned, merge duplicate findings and keep the higher severity. Then **verify** each Blocking finding: re-read or re-run its evidence yourself, in `<tmp>` or at its URL. Drop a finding whose evidence doesn't hold, and mark one you couldn't check *unverified*. Number the rest `F1`, `F2`, … in report order. Delete `<tmp>` and the re-review references.
 
 - **Verdict**: Reject if any finding is Blocking, naming in the header the findings whose fixes would turn it to Approve; otherwise Approve. Should fix, Nits and Follow-on never hold up approval.
-- **Scope**: re-check every finding against the spec's intent (Scope in `reviewers/common.md`) and move any outside it to Follow-on, whatever severity its reviewer gave. Every round holds the first round's scope: edits to the spec can widen its intent, findings can't.
+- **Scope**: re-check every finding against the spec's goal (Scope in `reviewers/common.md`) and move any outside it to Follow-on, whatever severity its reviewer gave. Every round holds the first round's scope: edits to the spec can widen its goal, findings can't.
 - **Rulings**: drop any finding the user rejected or deferred in an earlier round, unless what it's about has changed since, and give the count in the header.
 - **Coverage**: a section of the spec or a ticket that no reviewer read in full is **unread**.
 - **Confidence**: start at High and drop one step, to a floor of Low, for each gap: a reference or related repo out of reach; a reviewer that failed or returned nothing; any unread section; any unverified finding; no test suite timing from `tests`. Confidence never changes the verdict.
@@ -75,7 +75,7 @@ F2 spec § Rollout (impact, new, unverified): <problem>. Fix: <one line>.
 ### Should fix
 ### Nits
 ### Follow-on
-- <title for a separate issue> (<reviewer>): <why it's outside the spec's intent>
+- <title for a separate issue> (<reviewer>): <why it's outside the spec's goal>
 ### Land early
 - <static check, lint rule or CI step>: guards F3, F5
 ```
