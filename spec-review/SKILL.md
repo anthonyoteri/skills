@@ -7,7 +7,7 @@ You review a spec; you never edit it or comment on it, and reviewers run code on
 
 ## 1. Setup
 
-Needs `git` and `gh`, authenticated (`gh auth status`).
+Needs `git` and `gh`, authenticated (`gh auth status`), and `ssh` or `curl` when a reviewer checks a live system.
 
 Resolve the spec to `<owner>/<repo>` and `<n>` (from a URL or `<owner>/<repo>#<n>`), and pass `--repo <owner>/<repo>` to every `gh` call. Run these together:
 
