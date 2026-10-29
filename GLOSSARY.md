@@ -12,8 +12,12 @@ _Avoid_: Issue, comment, note
 How strong the evidence behind a review's outcome is: High, Medium or Low, lowered by each gap in what the review could check.
 _Avoid_: Certainty, score, Extreme
 
+**Subagent**:
+A Claude Code agent a skill launches with a fresh context to do one part of its work.
+_Avoid_: Sub-agent, agent
+
 **Reviewer**:
-A subagent that examines one area and reports findings, starting from a fresh context.
+A subagent that examines one area and reports findings.
 _Avoid_: Angle, agent, checker
 
 **Code review skill**:

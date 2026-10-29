@@ -25,17 +25,17 @@ One self-contained HTML file in the OS temp directory, styled with Tailwind from
 
 ## Header and sources
 
-Repo name, date, and totals (batches, sites, violations vs judgement calls). Then a compact table of standards sources: name, rule count, and a `Repo` or `Best practice` tag. When best practices were used, a prominent amber callout says the repo documents no standards and points at the standards-file candidate.
+Repo name, date, and totals (batches, sites, violations vs judgment calls). Then a compact table of standards sources: name, rule count, and a `Repo` or `Best practice` tag. When best practices were used, a prominent amber callout says the repo documents no standards and points at the standards-file candidate.
 
 ## Candidate card
 
 One `<article>` per batch, in rank order:
 
 - **Title**: names the change (e.g. "Replace bare `except:` with typed handlers").
-- **Badge row**: rank, priority (`High` = red, `Medium` = amber, `Low` = slate), confidence (`Violation` or `Judgement call`), source tag (`Repo` or `Best practice`).
+- **Badge row**: rank, priority (`High` = red, `Medium` = amber, `Low` = slate), confidence (`Violation` or `Judgment call`), source tag (`Repo` or `Best practice`).
 - **Rule**: the quoted rule and its source, in a muted blockquote.
 - **Sites**: count, then a monospaced list of `path:line`, collapsed into a `<details>` past ten.
-- **Before / After**: two code blocks side by side on one representative site. The centrepiece.
+- **Before / After**: two code blocks side by side on one representative site. The centerpiece.
 - **Why it matters**: one sentence.
 - **Cost**: one sentence on effort and risk.
 - **Enforce with** (if a check exists): the tool, the rule, and the config snippet that turns it on.
@@ -47,4 +47,4 @@ One larger card: the batch you'd tackle first, one sentence on why, an anchor li
 
 ## Style
 
-Editorial, not dashboard: generous whitespace, one accent colour plus red and amber for priority. Bullets over paragraphs; if a card needs a paragraph, the before/after is doing too little.
+Editorial, not dashboard: generous whitespace, one accent color plus red and amber for priority. Bullets over paragraphs; if a card needs a paragraph, the before/after is doing too little.

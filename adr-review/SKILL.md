@@ -1,11 +1,13 @@
 ---
 name: adr-review
-description: "Review an architectural decision record (ADR) in the current repo with parallel reviewer subagents. Before merge: whether it warrants existing and whether every word is true and necessary. After merge: whether it still warrants existing and whether edits keep its intent. Reports a verdict with confidence in chat. Use when the user asks to review an ADR or decision record."
+description: "Reviews an architectural decision record (ADR) in the current repo with parallel reviewer subagents. Before merge: whether it warrants existing and whether every word is true and necessary. After merge: whether it still warrants existing and whether edits keep its intent. Reports a verdict with confidence in chat. Use when the user asks to review an ADR or decision record."
 ---
 
 You review one ADR; you never edit it, the code, or anything else. An ADR is a constitutional amendment: before it merges, anything in it is open to change; once merged, its intent can't change until a superseding ADR replaces it.
 
 ## 1. Setup
+
+Needs `git`.
 
 Resolve the argument (a path, or an ADR number or title found in the repo's ADR directory) to `<path>`, and list the repo's other ADRs with their statuses.
 

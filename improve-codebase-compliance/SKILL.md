@@ -1,6 +1,6 @@
 ---
 name: improve-codebase-compliance
-description: Audit the codebase against its coding standards (or language best practices when it has none), present ranked findings as a visual HTML report, then grill through whichever you pick.
+description: Audits the codebase against its coding standards (or language best practices when it has none), present ranked findings as a visual HTML report, then grill through whichever you pick.
 disable-model-invocation: true
 ---
 
@@ -12,6 +12,8 @@ Surface where the codebase drifts from its coding standards, rank the drift, and
 
 ### 1. Gather the standards
 
+Needs `git`, and the `grilling` skill for step 4.
+
 Search the repo for every file that documents how code should be written: `CODING_STANDARDS.md`, `CONTRIBUTING.md`, `AGENTS.md` / `CLAUDE.md`, style guides under `docs/`, ADRs in `docs/adr/`, and rules embedded in READMEs. When `CODING_STANDARDS.md` or `CONTRIBUTING.md` exists, it must be on the list.
 
 Split the rules in two:
@@ -21,7 +23,7 @@ Split the rules in two:
 
 ADRs and in-code comments that justify a deviation are **exceptions**, and an exception overrides the rule it excuses. The repo's standards are fixed input: audit against them as written.
 
-**No documented standards?** Fall back to **best practices**: detect the languages in the repo and take each one's official style guide (PEP 8, Effective Go, the Rust API Guidelines, Microsoft's .NET coding conventions) or a widely adopted guide from a tier-1 engineering org (Google's style guides, Meta's, Microsoft's). Name the exact guide behind every rule you apply. A best-practice finding is never more than a `Judgement call`: the team never agreed to it.
+**No documented standards?** Fall back to **best practices**: detect the languages in the repo and take each one's official style guide (PEP 8, Effective Go, the Rust API Guidelines, Microsoft's .NET coding conventions) or a widely adopted guide from a tier-1 engineering org (Google's style guides, Meta's, Microsoft's). Name the exact guide behind every rule you apply. A best-practice finding is never more than a `Judgment call`: the team never agreed to it.
 
 Done when you can list every standards source with its rule count, each one marked repo-documented or best practice.
 
@@ -29,16 +31,16 @@ Done when you can list every standards source with its rule count, each one mark
 
 If the user named a direction (a module, a rule, a language), scope the audit to it. Otherwise audit the whole codebase.
 
-Spawn audit sub-agents in parallel, one per standards source (split a large source by rule group, or the codebase by top-level area, so each agent's slice fits comfortably). Paste each agent its rules verbatim and the known exceptions. Each finding must carry:
+Spawn audit subagents in parallel, one per standards source (split a large source by rule group, or the codebase by top-level area, so each subagent's slice fits comfortably). Paste each subagent its rules verbatim and the known exceptions. Each finding must carry:
 
 - **Rule**: source and the quoted rule.
 - **Location**: `path:line`, plus the count of sibling sites when the same violation repeats.
 - **Evidence**: the quoted code.
-- **Confidence**: `Violation` (the rule plainly applies and is plainly broken) or `Judgement call` (the rule's wording, intent, or reach is ambiguous here).
+- **Confidence**: `Violation` (the rule plainly applies and is plainly broken) or `Judgment call` (the rule's wording, intent, or reach is ambiguous here).
 
-Done when every prose rule has been applied to its whole slice and every agent has reported.
+Done when every prose rule has been applied to its whole slice and every subagent has reported.
 
-### 3. Prioritise and present as an HTML report
+### 3. Prioritize and present as an HTML report
 
 Group findings into **batches**: findings that share a rule and a fix shape, so one decision settles them all. Rank the batches by:
 
@@ -46,7 +48,7 @@ Group findings into **batches**: findings that share a rule and a fix shape, so 
 2. **Locality**: hot spots first. Walk `git log` to find the files that change most; a fix there pays back on every future change.
 3. **Cost**: sites touched, and the risk of each change.
 
-For each batch, look for a static lint or check that would enforce its rule from here on, so the drift cannot return: first a rule in a tool the repo already runs (enabling a rule in its linter config), then a new tool or a small custom check. Name the exact rule and the config change. Leave the field empty when the rule needs human judgement to apply.
+For each batch, look for a static lint or check that would enforce its rule from here on, so the drift cannot return: first a rule in a tool the repo already runs (enabling a rule in its linter config), then a new tool or a small custom check. Name the exact rule and the config change. Leave the field empty when the rule needs human judgment to apply.
 
 When the audit ran on best practices, the top-ranked candidate is always **Adopt an explicit coding standards file**: list the guides you used and the rules that produced the most findings as its starting content.
 

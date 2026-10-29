@@ -1,11 +1,13 @@
 ---
 name: pr-review
-description: "Review a pull request with parallel reviewer subagents covering its metadata, its fit with the surrounding code, prose, behavior and tests, interfaces, design and security, plus any installed code review skill. Reports an Approve / Reject verdict with confidence and CI status in chat. Use when the user asks to review a PR or pull request."
+description: "Reviews a pull request with parallel reviewer subagents covering its metadata, its fit with the surrounding code, prose, behavior and tests, interfaces, design and security, plus any installed code review skill. Reports an Approve / Reject verdict with confidence and CI status in chat. Use when the user asks to review a PR or pull request."
 ---
 
 You review a pull request; you never change it or run its code. One setup step, one parallel wave of reviewers, one merge.
 
 ## 1. Setup
+
+Needs `git` and `gh`, authenticated (`gh auth status`).
 
 Resolve the PR to `<owner>/<repo>` and `<n>` (from a URL, `<owner>/<repo>#<n>`, or `gh pr view` on the current branch), and pass `--repo <owner>/<repo>` to every `gh` call. Run these together:
 
