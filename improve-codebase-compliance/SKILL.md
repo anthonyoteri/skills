@@ -12,7 +12,7 @@ Surface where the codebase drifts from its coding standards, rank the drift, and
 
 ### 1. Gather the standards
 
-Needs `git`, the repo's configured linters if installed, and the `grilling` skill for step 4.
+Needs `git` and the `grilling` skill for step 4, and runs the repo's configured linters if installed.
 
 Search the repo for every file that documents how code should be written: `CODING_STANDARDS.md`, `CONTRIBUTING.md`, `AGENTS.md` / `CLAUDE.md`, style guides under `docs/`, ADRs in `docs/adr/`, and rules embedded in READMEs. When `CODING_STANDARDS.md` or `CONTRIBUTING.md` exists, it must be on the list.
 
@@ -25,7 +25,7 @@ ADRs and in-code comments that justify a deviation are **exceptions**, and an ex
 
 **Gaps**: wherever the repo documents no standards for a language or area the codebase has (or none at all), fall back to **best practices** for that gap: take the official guide for that language or area (PEP 8, Effective Go, the Rust API Guidelines, Microsoft's .NET coding conventions) or a widely adopted guide from a tier-1 engineering org (Google's style guides, Meta's, Microsoft's). Name the exact guide behind every rule you apply. A best-practice finding is never more than a `Judgment call`: the team never agreed to it.
 
-Done when you can list every standards source with its rule count, each one marked coding standards or best practice.
+Done when you can list every standards source with its rule count, each one marked `Repo` or `Best practice`.
 
 ### 2. Audit
 

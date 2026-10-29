@@ -48,12 +48,12 @@ _Avoid_: Switch-over, go-live
 How reversible a change is: two-way when reverting it undoes it, one-way when it can only be superseded (migrated data, a published format, a merged ADR).
 _Avoid_: Reversibility, risk level
 
-**Repo rules**:
-The conventions a repository documents for itself, which always take precedence over best practices.
-_Avoid_: Standards, house style
+**Coding standards**:
+The conventions a repository documents for itself (in `CODING_STANDARDS.md`, `CONTRIBUTING.md`, a style guide, a glossary or linter configs), each one a rule. They always take precedence over best practices.
+_Avoid_: Repo rules, house style, guidelines
 
 **Best practices**:
-The widely accepted conventions a reviewer applies where the repo rules are silent.
+The widely accepted conventions a reviewer applies where the coding standards are silent.
 _Avoid_: Defaults
 
 **ADR**:

@@ -1,6 +1,6 @@
 # Metadata reviewer
 
-Review the PR's title, description, commits and issue links, plus any other PR rule the repo documents (labels, changelog, sign-off). Repo rules come from `CONTRIBUTING.md`, the PR template, commitlint config, and title-check workflows.
+Review the PR's title, description, commits and issue links, plus any other PR rule the repo documents (labels, changelog, sign-off). Coding standards come from `CONTRIBUTING.md`, the PR template, commitlint config, and title-check workflows.
 
 **Title**: imperative mood ("Add retry to upload"), about 60 characters (66 at most), no trailing period, saying what changes for the project's users. A bug fix names the fixed behavior, not the mechanism. Conventional-commit format only if the repo documents it or most of its last 20 merged PR titles use it (`gh pr list --state merged --limit 20`); then the type and scope must fit the change.
 
