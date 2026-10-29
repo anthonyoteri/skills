@@ -1,6 +1,6 @@
 ---
 name: improve-codebase-compliance
-description: Audits the codebase against its coding standards (or language best practices when it has none), present ranked findings as a visual HTML report, then grill through whichever you pick.
+description: Audits the codebase against its coding standards (or best practices wherever it has none), presents ranked findings as a visual HTML report, then grills through whichever you pick.
 disable-model-invocation: true
 ---
 
@@ -23,7 +23,7 @@ Split the rules in two:
 
 ADRs and in-code comments that justify a deviation are **exceptions**, and an exception overrides the rule it excuses. The repo's standards are fixed input: audit against them as written.
 
-**Gaps**: wherever the repo documents no standards for a language or area the codebase has (or none at all), fall back to **best practices** for that gap: detect the languages in the repo and take each one's official style guide (PEP 8, Effective Go, the Rust API Guidelines, Microsoft's .NET coding conventions) or a widely adopted guide from a tier-1 engineering org (Google's style guides, Meta's, Microsoft's). Name the exact guide behind every rule you apply. A best-practice finding is never more than a `Judgment call`: the team never agreed to it.
+**Gaps**: wherever the repo documents no standards for a language or area the codebase has (or none at all), fall back to **best practices** for that gap: take the official guide for that language or area (PEP 8, Effective Go, the Rust API Guidelines, Microsoft's .NET coding conventions) or a widely adopted guide from a tier-1 engineering org (Google's style guides, Meta's, Microsoft's). Name the exact guide behind every rule you apply. A best-practice finding is never more than a `Judgment call`: the team never agreed to it.
 
 Done when you can list every standards source with its rule count, each one marked repo-documented or best practice.
 
@@ -50,7 +50,7 @@ Group findings into **batches**: findings that share a rule and a fix shape, so 
 
 For each batch, look for a static lint or check that would enforce its rule from here on, so the drift cannot return: first a rule in a tool the repo already runs (enabling a rule in its linter config), then a new tool or a small custom check. Name the exact rule and the config change. Leave the field empty when the rule needs human judgment to apply.
 
-When any rule came from best practices, the top-ranked candidate is always **Adopt an explicit coding standards file** covering the gaps, however few best-practice findings there were: list the guides you used and the rules that produced findings as its starting content.
+When any rule came from best practices, the top-ranked candidate is always **Write down the missing standards**, however few best-practice findings there were. Its starting content is the guides you used and the rules that produced findings.
 
 Write a self-contained HTML file to the OS temp directory so nothing lands in the repo. Resolve the temp dir from `$TMPDIR`, falling back to `/tmp` (or `%TEMP%` on Windows), and write to `<tmpdir>/compliance-review-<timestamp>.html`. Open it for the user (`open` on macOS, `xdg-open` on Linux, `start` on Windows) and tell them the absolute path. See [HTML-REPORT.md](HTML-REPORT.md) for the scaffold and card format.
 
@@ -67,6 +67,6 @@ Once the user picks one or more batches, call the Skill tool with "grilling" and
 - **Blast radius**: public interfaces, persisted data, or callers outside the repo that the change would break.
 - **Enforcement**: adopt the suggested lint or check, and does it land with the fix or before it (flagging only new code)?
 
-For the **Adopt an explicit coding standards file** candidate, the tree is which rules to adopt, which to reject, and where the file lives. Ask the user where to save it, then write it there once they confirm its content.
+For the **Write down the missing standards** candidate, the tree is which rules to adopt, which to reject, and where they go: an existing standards file to extend, or a new one. Ask the user, then write them there once they confirm the content.
 
 Done when every picked batch has an agreed reach, fix shape, and file list, or is dropped, and the user confirms the shared understanding. Close with a summary of the agreed scope per batch, including its agreed lint or check, plus any deliberate exceptions uncovered that the user may want to record, so the next audit skips them.

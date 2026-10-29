@@ -25,7 +25,7 @@ One self-contained HTML file in the OS temp directory, styled with Tailwind from
 
 ## Header and sources
 
-Repo name, date, and totals (batches, sites, violations vs judgment calls). Then a compact table of standards sources: name, rule count, and a `Repo` or `Best practice` tag. When best practices were used, a prominent amber callout says the repo documents no standards and points at the standards-file candidate.
+Repo name, date, and totals (batches, sites, violations vs judgment calls). Then a compact table of standards sources: name, rule count, and a `Repo` or `Best practice` tag. When best practices were used, a prominent amber callout names the languages or areas the repo leaves undocumented and points at the standards candidate.
 
 ## Candidate card
 
