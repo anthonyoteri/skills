@@ -1,0 +1,13 @@
+name: Check skills
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  setup-step:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/check_skill_setup.py

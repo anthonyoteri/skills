@@ -7,7 +7,7 @@ You review a pull request; you never change it or run its code. One setup step, 
 
 ## 1. Setup
 
-Needs `git` and `gh`, authenticated (`gh auth status`).
+Needs `git`, `curl` and `gh`, authenticated (`gh auth status`). Uses the `adr-review` and `unslop` skills, and a code review skill (see step 2), if installed.
 
 Resolve the PR to `<owner>/<repo>` and `<n>` (from a URL, `<owner>/<repo>#<n>`, or `gh pr view` on the current branch), and pass `--repo <owner>/<repo>` to every `gh` call. Run these together:
 
