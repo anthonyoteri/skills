@@ -32,7 +32,7 @@ Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/revie
 
 ## 3. Verdict
 
-When every reviewer has returned, merge duplicate findings, keep the higher severity, and number them `F1`, `F2`, … in report order.
+When every reviewer has returned, merge duplicate findings. Then **rule** on each finding's severity: a reviewer's severity is a proposal, and yours is the one the verdict uses. Hold each finding to its severity's definition in `reviewers/common.md`, the way a reasonable reader who knows this repo's conventions would. Downgrade a finding that falls short of its severity, and drop one that's a stretch: a reading no one here would take, or a preference presented as a defect. When reviewers give one finding different severities, weigh both and pick; neither wins for being higher. A finding you'd argue against in your report is yours to rule on, never to pass on. Number the rest `F1`, `F2`, … in report order.
 
 - **Pre-merge verdict**: Reject if any finding is Blocking, naming in the header the findings whose fixes would turn it to Approve; otherwise Approve. Should fix and Nits never hold up approval.
 - **Merged verdict**: **Keep**, **Supersede** with the replacement ADR text `warrant` proposed, or **Reject** with no replacement. Reject only on significant just cause: evidence that the decision is now wrong and that no decision should take its place. Report any pending edit that changes intent as Blocking, alongside the verdict.
@@ -42,15 +42,17 @@ When every reviewer has returned, merge duplicate findings, keep the higher seve
 Reply in chat:
 
 ```
-**Supersede** · confidence High · 1 Blocking, 1 Should fix, 0 Nits · 1 omitted per earlier rulings
+**Supersede** · confidence High · 1 Blocking, 1 Should fix, 0 Nits · 1 downgraded, 1 dropped · 1 omitted per earlier rulings
 Reviewed: `<blob>` (incremental since `<since>`)
 
 ### Blocking
 F1 `docs/adr/0004-crates.md:12` (warrant): <problem>. Fix: <one line>.
 ### Should fix
 ### Nits
+### Dropped
+- `<location>` (<reviewer>, proposed <severity>): <problem>. Dropped: <why>.
 ### Proposed ADR
 <replacement text, for Supersede only>
 ```
 
-Omit empty sections.
+Omit empty sections. After a downgraded finding's reviewer, give the severity it was proposed at and why you lowered it (`content, proposed Blocking: <why>`); list dropped findings under Dropped so the user can reinstate one.

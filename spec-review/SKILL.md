@@ -54,7 +54,7 @@ Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/revie
 
 ## 3. Verdict
 
-When every reviewer has returned, merge duplicate findings and keep the higher severity. Then **verify** each Blocking finding: re-read or re-run its evidence yourself, in `<tmp>` or at its URL. Drop a finding whose evidence doesn't hold, and mark one you couldn't check *unverified*. Number the rest `F1`, `F2`, … in report order. Delete `<tmp>` and the re-review references.
+When every reviewer has returned, merge duplicate findings. Then **rule** on each finding's severity: a reviewer's severity is a proposal, and yours is the one the verdict uses. Hold each finding to its severity's definition in `reviewers/common.md`, the way a reasonable reader who knows this repo's conventions would. Downgrade a finding that falls short of its severity, and drop one that's a stretch: a reading no one here would take, or a preference presented as a defect. When reviewers give one finding different severities, weigh both and pick; neither wins for being higher. A finding you'd argue against in your report is yours to rule on, never to pass on. Then **verify** each Blocking finding: re-read or re-run its evidence yourself, in `<tmp>` or at its URL. Drop a finding whose evidence doesn't hold, and mark one you couldn't check *unverified*. Number the rest `F1`, `F2`, … in report order. Delete `<tmp>` and the re-review references.
 
 - **Verdict**: Reject if any finding is Blocking, naming in the header the findings whose fixes would turn it to Approve; otherwise Approve. Should fix, Nits and Follow-on never hold up approval.
 - **Scope**: re-check every finding against the spec's goal (Scope in `reviewers/common.md`) and move any outside it to Follow-on, whatever severity its reviewer gave. Every round holds the first round's scope: edits to the spec can widen its goal, findings can't.
@@ -65,7 +65,7 @@ When every reviewer has returned, merge duplicate findings and keep the higher s
 Reply in chat:
 
 ```
-**Reject** · confidence Medium (1 reference unreachable) · approves once F1 and F2 are fixed · 2 Blocking, 1 Should fix, 2 Nits, 1 Follow-on · 1 omitted per earlier rulings
+**Reject** · confidence Medium (1 reference unreachable) · approves once F1 and F2 are fixed · 2 Blocking, 1 Should fix, 2 Nits, 1 Follow-on · 1 downgraded, 1 dropped · 1 omitted per earlier rulings
 Reviewed: `<at>` (re-review since `<since>`)
 Unread: spec § Inventory
 
@@ -74,10 +74,12 @@ F1 #42 (assumptions, missed): <problem>. Fix: <one line>.
 F2 spec § Rollout (impact, new, unverified): <problem>. Fix: <one line>.
 ### Should fix
 ### Nits
+### Dropped
+- `<location>` (<reviewer>, proposed <severity>): <problem>. Dropped: <why>.
 ### Follow-on
 - <title for a separate issue> (<reviewer>): <why it's outside the spec's goal>
 ### Land early
 - <static check, lint rule or CI step>: guards F3, F5
 ```
 
-Omit empty sections and the `Unread:` line when every section was read; in a first round, `Reviewed:` shows only `<at>`. After each Blocking finding's reviewer, give its origin in a re-review, and *unverified* when it applies. Report each finding once: list under Land early only guards that aren't already a finding's fix. Cite each finding by ticket (`#42`) or by spec section (`spec § Rollout`).
+Omit empty sections and the `Unread:` line when every section was read. After a downgraded finding's reviewer, give the severity it was proposed at and why you lowered it (`content, proposed Blocking: <why>`); list dropped findings under Dropped so the user can reinstate one. In a first round, `Reviewed:` shows only `<at>`. After each Blocking finding's reviewer, give its origin in a re-review, and *unverified* when it applies. Report each finding once: list under Land early only guards that aren't already a finding's fix. Cite each finding by ticket (`#42`) or by spec section (`spec § Rollout`).
