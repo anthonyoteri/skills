@@ -32,6 +32,10 @@ _Avoid_: Requirements, specification, plan
 One issue the spec is split into, implemented and reviewed as one pull request.
 _Avoid_: Task, sub-task, story
 
+**Required check**:
+A CI check the repository's branch protection or rulesets require to pass before a pull request can merge. Every other check is informational.
+_Avoid_: Mandatory check, gating check
+
 **Re-review**:
 A later round of a spec review that reads the whole spec again, given the spec's diff since the last round, the user's rulings and the previous verdict, and tags each Blocking finding new, regression or missed. Unlike an incremental round in pr-review or adr-review, it doesn't narrow to the changes.
 _Avoid_: Second pass, follow-up review
