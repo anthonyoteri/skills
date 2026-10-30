@@ -48,7 +48,7 @@ While they run, run the code review skill yourself from inside `<tmp>`, giving i
 
 ## 3. Verdict
 
-When every reviewer has returned, merge duplicate findings and keep the higher severity. Re-check every finding, including those of the code review skill and `adr-review`, against the PR's goal (Follow-on in `reviewers/common.md`), and move any outside it to Follow-on whatever severity it was given. Number the rest `F1`, `F2`, … in report order. Delete `<tmp>`.
+When every reviewer has returned, merge duplicate findings. Then **rule** on each finding's severity: the reviewers are the jury and you are the judge. A reviewer's severity is its recommendation; yours is the one the verdict uses. Hold each finding to its severity's definition in `reviewers/common.md`, the way a reasonable reader who knows this repo's conventions would. Downgrade a finding that falls short of its severity, and drop one that's a stretch: a reading no one here would take, or a preference presented as a defect. When reviewers give one finding different severities, weigh both and pick; neither wins for being higher. A finding you'd argue against in your report is yours to rule on, never to pass on. Re-check every finding, including those of the code review skill and `adr-review`, against the PR's goal (Follow-on in `reviewers/common.md`), and move any outside it to Follow-on whatever severity it was given. Number the rest `F1`, `F2`, … in report order. Delete `<tmp>`.
 
 - **Verdict**: Reject if any finding is Blocking, naming in the header the findings whose fixes would turn it to Approve; otherwise Approve. Should fix, Nits and Follow-on never hold up approval.
 - **Rulings**: drop any finding the user rejected or deferred in an earlier round of this conversation, unless what it's about has changed since, and give the count in the header.
@@ -59,7 +59,7 @@ When every reviewer has returned, merge duplicate findings and keep the higher s
 Reply in chat:
 
 ```
-**Reject** · confidence Medium (2 checks pending) · approves once F1 is fixed · 1 Blocking, 2 Should fix, 3 Nits, 1 Follow-on · 2 omitted per earlier rulings
+**Reject** · confidence Medium (2 checks pending) · approves once F1 is fixed · 1 Blocking, 2 Should fix, 3 Nits, 1 Follow-on · 1 downgraded, 1 dropped · 2 omitted per earlier rulings
 Reviewed: `a1b2c3d` (incremental since `9f8e7d6`)
 CI: 🔴 lint failed · 🟡 2 pending · 🟢 5 passed
 
@@ -67,10 +67,12 @@ CI: 🔴 lint failed · 🟡 2 pending · 🟢 5 passed
 F1 `src/x.py:42` (behavior): <problem>. Fix: <one line>.
 ### Should fix
 ### Nits
+### Dropped
+- `<location>` (<reviewer>, proposed <severity>): <problem>. Dropped: <why>.
 ### Follow-on
 F7 `src/y.py:10` (design): <title for a separate issue>. Outside the goal: <why>.
 ### Automate this
 - <lint rule or CI step>: would have caught F3, F5
 ```
 
-Omit empty sections. Merge the findings of the code review skill and `adr-review` with the reviewers', giving each a severity. Report each finding once: list under Automate this only automation that isn't already a finding's fix.
+Omit empty sections. After a downgraded finding's reviewer, give the severity it was proposed at and why you lowered it (`content, proposed Blocking: <why>`); list dropped findings under Dropped so the user can reinstate one. Merge the findings of the code review skill and `adr-review` with the reviewers', giving each a severity. Report each finding once: list under Automate this only automation that isn't already a finding's fix.

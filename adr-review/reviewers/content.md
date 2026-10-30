@@ -11,4 +11,4 @@ Every word in an ADR carries weight, because it can't be taken back once merged.
 - **No filler**: background, history, restatement, hedging, enthusiasm or explanation that the decision, alternatives and consequences don't need. Blocking, with the cut in `Fix`.
 - **Alternatives**: the alternatives considered when the decision was made, each with why it was rejected, as the authors knew them then. Missing is a Nit, since they are good practice rather than required. Vague is Blocking when the wording blurs what the authors knew, and Should fix when what they knew was itself thin.
 - **Consequences**: the downstream consequences known when the decision was made, good and bad. Missing is a Nit; vague is graded as for alternatives.
-- **Precise**: each sentence has one reading. A word a future reader could interpret two ways is Blocking.
+- **Precise**: each sentence has one reading. A word that a reasonable reader who knows this repo's conventions would read two ways is Blocking.
