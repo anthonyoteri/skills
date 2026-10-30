@@ -37,7 +37,7 @@ When every reviewer has returned, merge duplicate findings, keep the higher seve
 - **Pre-merge verdict**: Reject if any finding is Blocking, naming in the header the findings whose fixes would turn it to Approve; otherwise Approve. Should fix and Nits never hold up approval.
 - **Merged verdict**: **Keep**, **Supersede** with the replacement ADR text `warrant` proposed, or **Reject** with no replacement. Reject only on significant just cause: evidence that the decision is now wrong and that no decision should take its place. Report any pending edit that changes intent as Blocking, alongside the verdict.
 - **Rulings**: drop any finding the user rejected or deferred in an earlier round of this conversation, unless what it's about has changed since, and give the count in the header.
-- **Confidence**: start at High and drop one step, to a floor of Low, for each gap: a reviewer that failed or returned nothing; a claim or rule no reviewer could check. Confidence never changes the verdict.
+- **Confidence**: start at High and drop one step, to a floor of Low, for each gap: a reviewer that failed or returned nothing; a claim or rule no reviewer could check; a document the ADR references that `precedent` didn't read in full. Confidence never changes the verdict.
 
 Reply in chat:
 
