@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   setup-names-tools:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
@@ -18,7 +18,7 @@ jobs:
       - run: python3 scripts/check_skill_setup.py
 
   glossary-terms:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
@@ -26,7 +26,7 @@ jobs:
       - run: python3 scripts/check_glossary_terms.py
 
   actionlint:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
