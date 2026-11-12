@@ -1,13 +1,13 @@
 ---
 name: pr-review
-description: "Reviews a pull request with parallel reviewer subagents covering its metadata, its fit with the surrounding code, prose, behavior and tests, interfaces, design and security, plus any installed code review skill. Reports an Approve / Reject verdict with confidence and CI status in chat. Use when the user asks to review a PR or pull request."
+description: "Reviews a pull request with a few fresh-context reviewer subagents, checking that it does what it claims and introduces nothing bad or hard to reverse. Reports an Approve / No verdict / Reject verdict and actionable findings in chat. Use when the user asks to review a PR or pull request."
 ---
 
-You review a pull request; you never change it or run its code. One setup step, one parallel wave of reviewers, one merge.
+You review a pull request; you never change it or run its code. One setup step, one parallel wave of reviewers, one merge. Reviewers are subagents so they see the PR without the development conversation.
 
 ## 1. Setup
 
-Needs `git` and `gh`, authenticated (`gh auth status`), and `curl` to check external links. Uses the `adr-review` and `unslop` skills if installed, and a code review skill if installed (see step 2).
+Needs `git` and `gh`, authenticated (`gh auth status`). Uses the `adr-review` skill if installed.
 
 Resolve the PR to `<owner>/<repo>` and `<n>` (from a URL, `<owner>/<repo>#<n>`, or `gh pr view` on the current branch), and pass `--repo <owner>/<repo>` to every `gh` call. Run these together:
 
@@ -19,60 +19,49 @@ Resolve the PR to `<owner>/<repo>` and `<n>` (from a URL, `<owner>/<repo>#<n>`, 
 
 **Rounds**: when an earlier round in this conversation reviewed this PR, or the user gives `since <sha>`, this round is **incremental** from that round's head `<since>`, unless the user asks for `full`. Fetch it (`git -C <tmp> fetch -q origin <since>`); if that fails or `<since>` isn't an ancestor of `HEAD`, as after a force push, review the whole PR. In an incremental round, the changed files and size below come from `<since>..HEAD`, keeping only files the PR itself changes (`origin/<baseRefName>...HEAD`), so a merge from the base branch doesn't count.
 
-Sort the changed files. **ADRs**: files in the repo's ADR directory, when the `adr-review` skill is installed; otherwise they are prose. **Prose**: docs, READMEs, changelogs, agent instructions (skills, `AGENTS.md`, `CLAUDE.md`, prompts), comment-only edits. **Code**: everything else, including config, CI and build files.
+Sort the changed files. **ADRs**: files in the repo's ADR directory, when the `adr-review` skill is installed. **Prose**: docs, READMEs, changelogs, agent instructions (skills, `AGENTS.md`, `CLAUDE.md`, prompts), comment-only edits. **Code**: everything else, including config, CI and build files.
 
-The code's **size** is its added lines, summed over the code files in `git -C <tmp> diff --numstat origin/<baseRefName>...HEAD`, leaving out lockfiles and **generated** files, the ones the base branch's `.gitattributes` marks `linguist-generated`.
+The code's **size** is its added lines, summed over the code files in `git -C <tmp> diff --numstat origin/<baseRefName>...HEAD`, leaving out lockfiles and **generated** files, the ones the base branch's `.gitattributes` marks `linguist-generated`. Generated files aren't reviewed.
+
+A PR is **small** when its size is about 300 lines or fewer, or it is **dependency-only**: every code file is a lockfile or a dependency manifest whose only changes are dependency versions, as in a Dependabot or Renovate bump.
 
 ## 2. Review wave
 
-Pick the **code review skill** now, if code changed: Matt Pocock's `code-review`; else the first installed skill whose description says it reviews a diff, branch or PR (not this skill, not `security-review`); else none.
+In one message, launch every reviewer that applies as a background `general-purpose` subagent. Use `model: sonnet` for all, unless the user said `deep`: then omit `model`, so they inherit the session's.
 
-In one message, launch every reviewer that applies as a background `general-purpose` subagent:
+| PR | Reviewers |
+|---|---|
+| Small, with code | one `combined` reviewer over all the code, plus `text` if prose or the PR text needs it |
+| No code files | `text` only |
+| Otherwise | `correctness`, `risk`, `context`, plus `text` if prose or the PR text needs it |
+| ADRs changed | add `adr-review`, run as its own subagent from inside `<tmp>`, one per ADR, by path |
 
-| Reviewer | Launch when | Model |
-|---|---|---|
-| `metadata` | always | sonnet |
-| `context` | unless dependency-only | inherit |
-| `prose` | prose changed | sonnet |
-| `behavior`, `interfaces`, `design`, `security` | code changed | inherit |
+`text` runs when prose changed, or the PR description or closing-issue link needs checking (always, unless the PR is dependency-only).
 
-Generated files aren't reviewed, and lockfiles go to one `interfaces` reviewer.
+If the size is more than about 2,500 lines, split the code files by directory into **batches** within that limit, and launch `correctness` and `risk` once per batch. `context` and `text` run once, over the whole PR.
 
-A PR is **dependency-only** when every code file is a lockfile or a dependency manifest whose only changes are dependency versions, as in a Dependabot or Renovate bump. Launch only `metadata`, `interfaces`, `security`, and `prose` if prose changed, and skip the code review skill.
-
-If the size is more than one reviewer can read with care (about 1,500 lines of Python; more for verbose code, less for dense), split the code files by directory into **batches** within that limit, and launch each of those reviewers once per batch. `context` still runs once, over the whole PR.
-
-Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/reviewers/<name>.md`, then review PR `<url>`. Clone: `<tmp>`, PR checked out, base `origin/<baseRefName>`. Your files: `<list>`. Spec: `<issue text, or 'the PR description'>`. Repo visibility: `<visibility>`." In an incremental round, add "Since: `<since>`" to every prompt but `metadata`'s, and give each reviewer the earlier rounds' findings in its area that the user didn't reject or defer. Tell `design` whether a code review skill is running, and `metadata` and `context` whether the code was batched.
-
-While they run, run the code review skill yourself from inside `<tmp>`, giving it `<since>` in an incremental round, otherwise `origin/<baseRefName>`, as the fixed point and the spec, so it never stops to ask. Then run `adr-review` from inside `<tmp>` on each ADR, by path.
+Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/reviewers/<name>.md`, then review PR `<url>`. Clone: `<tmp>`, PR checked out, base `origin/<baseRefName>`. Your files: `<list>`. Spec: `<issue text, or 'the PR description'>`. Repo visibility: `<visibility>`." For `combined`, name `correctness.md`, `risk.md` and `context.md`. In an incremental round, add "Since: `<since>`" to every prompt, and give each reviewer the earlier rounds' findings that the user didn't reject or defer.
 
 ## 3. Verdict
 
-When every reviewer has returned, merge duplicate findings. Then **rule** on each finding's severity: the reviewers are the jury and you are the judge. A reviewer's severity is its recommendation; yours is the one the verdict uses. Hold each finding to its severity's definition in `reviewers/common.md`, the way a reasonable reader who knows this repo's conventions would. Downgrade a finding that falls short of its severity, and drop one that's a stretch: a reading no one here would take, or a preference presented as a defect. When reviewers give one finding different severities, weigh both and pick; neither wins for being higher. A finding you'd argue against in your report is yours to rule on, never to pass on. Re-check every finding, including those of the code review skill and `adr-review`, against the PR's goal (Follow-on in `reviewers/common.md`), and move any outside it to Follow-on whatever severity it was given. Number the rest `F1`, `F2`, … in report order. Delete `<tmp>`.
+When every reviewer has returned, merge duplicate findings, then hold each to the severity definitions in `reviewers/common.md`: downgrade a finding that falls short of its severity, and drop one that fails the bar. Drop any the user rejected or deferred in an earlier round of this conversation, unless what it's about has changed since. Number the rest `F1`, `F2`, … in report order. Delete `<tmp>`.
 
-- **Verdict**: Reject if any finding is Blocking, naming in the header the findings whose fixes would turn it to Approve; otherwise Approve. Should fix, Nits and Follow-on never hold up approval.
-- **Rulings**: drop any finding the user rejected or deferred in an earlier round of this conversation, unless what it's about has changed since, and give the count in the header.
-- **Split**: when a reviewer names a file it couldn't read in full, raise `metadata`'s proposed split, or propose one yourself, as Should fix.
-- **Confidence**: start at High and drop one step, to a floor of Low, for each gap: pending CI checks; no spec beyond a thin description; a reviewer that failed or returned nothing; any reviewer naming a file it couldn't read in full (once); a coverage gap reported by `behavior`. Confidence never changes the verdict.
-- **CI**: report each failed and pending check. CI is never a finding and never changes the verdict; gating merges is the repo's job.
+- **Approve**: merge as is, or once the reported findings are fixed.
+- **Reject**: given everything the reviewers found, reported or not, you would recommend against merging without significant corrections. Name the findings, or the underlying problem, that decide it.
+- **No verdict**: you can neither confidently approve nor reject. A gap leads here: a reviewer that failed or returned nothing, a file a reviewer couldn't read in full, no spec beyond a thin description. Say in one line why.
+- **CI**: report each failed and pending check. CI never changes the verdict; gating merges is the repo's job.
 
-Reply in chat:
+Reply in chat, omitting empty sections:
 
 ```
-**Reject** · confidence Medium (2 checks pending) · approves once F1 is fixed · 1 Blocking, 2 Should fix, 3 Nits, 1 Follow-on · 1 downgraded, 1 dropped · 2 omitted per earlier rulings
+**Approve** once F1 and F2 are fixed · 1 Blocking, 2 Should fix, 1 Nit
 Reviewed: `a1b2c3d` (incremental since `9f8e7d6`)
 CI: 🔴 lint failed · 🟡 2 pending · 🟢 5 passed
 
 ### Blocking
-F1 `src/x.py:42` (behavior): <problem>. Fix: <one line>.
+F1 `src/x.py:42` (correctness): <problem>. Fix: <one line>.
 ### Should fix
 ### Nits
-### Dropped
-- `<location>` (<reviewer>, proposed <severity>): <problem>. Dropped: <why>.
-### Follow-on
-F7 `src/y.py:10` (design): <title for a separate issue>. Outside the goal: <why>.
-### Automate this
-- <lint rule or CI step>: would have caught F3, F5
 ```
 
-Omit empty sections. After a downgraded finding's reviewer, give the severity it was proposed at and why you lowered it (`content, proposed Blocking: <why>`); list dropped findings under Dropped so the user can reinstate one. Merge the findings of the code review skill and `adr-review` with the reviewers', giving each a severity. Report each finding once: list under Automate this only automation that isn't already a finding's fix.
+Every finding is one the user should act on, so "fix anything reported" is a complete reply. Report each finding once. A finding from `adr-review` goes through the same bar.
