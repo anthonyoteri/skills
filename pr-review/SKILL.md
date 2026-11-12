@@ -31,7 +31,8 @@ In one message, launch every reviewer that applies as a background `general-purp
 
 | PR | Reviewers |
 |---|---|
-| Small | one `combined` reviewer over all the code, plus `text` if prose or the PR text needs it |
+| Small, with code | one `combined` reviewer over all the code, plus `text` if prose or the PR text needs it |
+| No code files | `text` only |
 | Otherwise | `correctness`, `risk`, `context`, plus `text` if prose or the PR text needs it |
 | ADRs changed | add `adr-review`, run as its own subagent from inside `<tmp>`, one per ADR, by path |
 
@@ -43,7 +44,7 @@ Prompt each with: "Read `<skill dir>/reviewers/common.md` and `<skill dir>/revie
 
 ## 3. Verdict
 
-When every reviewer has returned, merge duplicate findings, and drop any a reviewer reported that fails the bar in `reviewers/common.md`. Drop any the user rejected or deferred in an earlier round of this conversation, unless what it's about has changed since. Number the rest `F1`, `F2`, … in report order. Delete `<tmp>`.
+When every reviewer has returned, merge duplicate findings, then hold each to the severity definitions in `reviewers/common.md`: downgrade a finding that falls short of its severity, and drop one that fails the bar. Drop any the user rejected or deferred in an earlier round of this conversation, unless what it's about has changed since. Number the rest `F1`, `F2`, … in report order. Delete `<tmp>`.
 
 - **Approve**: merge as is, or once the reported findings are fixed.
 - **Reject**: given everything the reviewers found, reported or not, you would recommend against merging without significant corrections. Name the findings, or the underlying problem, that decide it.
