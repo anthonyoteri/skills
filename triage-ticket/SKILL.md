@@ -13,7 +13,7 @@ Take one **ticket**, often vague or stale, and settle what it is about, whether 
 
 Needs the tracker's client, authenticated: `gh` for GitHub (`gh auth status`), `fj` for Forgejo, and the Atlassian MCP tools for Jira. Needs the `grilling` skill for step 4. Subagents use `git` and read files, and run nothing else unless the user permits it.
 
-Take the ticket from the user's reference and decide the tracker from it: a Jira URL or a key like `ESB3027-123` is Jira, and a GitHub URL is GitHub. When the reference doesn't make the tracker obvious, as with `owner/repo#n` or a bare number, ask the user which tracker and repository it is, and don't guess. Triage one ticket per run.
+Take the ticket from the user's reference and decide the tracker from it: a Jira URL or a key like `PROJ-123` is Jira, and a GitHub URL is GitHub. When the reference doesn't make the tracker obvious, as with `owner/repo#n` or a bare number, ask the user which tracker and repository it is, and don't guess. Triage one ticket per run.
 
 Read the ticket with its comments, links, labels and fields, using the recipes in [trackers.md](trackers.md). Note its **type** (bug or feature) as filed; step 5 may change it.
 
