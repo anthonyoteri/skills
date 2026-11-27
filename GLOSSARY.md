@@ -79,3 +79,21 @@ _Avoid_: Scope, ownership
 **Supersede**:
 Replace a merged ADR's decision with a new ADR, leaving the old one in place with its status updated.
 _Avoid_: Amend, override
+
+# Triage
+
+The language of the ticket triage skill.
+
+## Language
+
+**Ticket** (in triage):
+Any item in an issue tracker, a bug or a feature. Unlike the review skills' Ticket, it isn't one piece of a spec.
+_Avoid_: Task, story
+
+**Reading**:
+The explorers' combined judgment of a ticket's current state: still a problem, already fixed, obsolete, or can't tell.
+_Avoid_: Diagnosis, status
+
+**Outcome**:
+The one thing a triage ends in: update the ticket, close it as won't fix, report it already fixed, or ask for more information.
+_Avoid_: Resolution, result
